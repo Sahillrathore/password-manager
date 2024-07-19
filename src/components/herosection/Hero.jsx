@@ -5,11 +5,11 @@ const Hero = () => {
   return (
     // <section className=''>
 
-    <div className='bg-[#16379a] h-[95vh] text-white flex relative'>
+    <div className='bg-[#16379a] lg:h-[89vh] h-[83vh] text-white flex relative justify-center sm:items-start items-center'>
 
-      <div className="hero-text z-20 h-full w-full flex items-center justify-center gap-20">
+      <div className="hero-text z-20 h-fit lg:mt-20 sm:mt-24 flex sm:flex-row xs:flex-row flex-col items-center sm:gap-20 gap-6">
         <div>
-          <h1 className='text-4xl font-bold w-64'>
+          <h1 className='sm:text-4xl text-3xl font-bold w-64 sm:text-start xs:text-start text-center'>
             Remembering
             Passwords Can
             Be Confusing.
@@ -18,10 +18,10 @@ const Hero = () => {
         </div>
 
         <div className="hero-mobile-img">
-          <div className="h-72 w-40 rounded-2xl bg-white px-2 py-4 border border-gray-400">
+          <div className="sm:h-72 h-64 sm:w-40 w-[9.5rem] rounded-2xl bg-white px-2 py-4 border border-gray-400">
             <div className='bg-gray-100 h-full w-full rounded-sm border border-gray-400 relative'>
 
-              <h3 className='text-xs bg-yellow-400 text-black py-2 text-center font-semibold'>Safe, Sound and Secure</h3>
+              <h3 className='sm:text-xs text-[10px] bg-yellow-400 text-black py-2 text-center font-semibold'>Safe, Sound and Secure</h3>
 
               <div className='text-[10px] py-2 text-center bg-white'>
               <i className="fa-solid fa-star-of-life text-zinc-900"></i>
@@ -44,8 +44,6 @@ const Hero = () => {
         </div>
       </div>
 
-
-      {/* <i class="fa-solid fa-plus absolute text-[#3155c4] font-bold text-[10rem] left-36"></i> */}
       <div className='w-full absolute bottom-0 left-0 bg-white'>
 
         <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1440 320"><path fill="#16379a" fillOpacity="1" d="M0,288L80,272C160,256,320,224,480,176C640,128,800,64,960,69.3C1120,75,1280,149,1360,186.7L1440,224L1440,0L1360,0C1280,0,1120,0,960,0C800,0,640,0,480,0C320,0,160,0,80,0L0,0Z"></path></svg>

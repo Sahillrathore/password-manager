@@ -82,10 +82,10 @@ const Passmanager = () => {
     <div className='py-4 px-6'>
       <h2 className='font-bold text-3xl underline text-[#16379a] text-center'>Keeper</h2>
 
-      <div className="pass-form  backdrop-blur-xl p-2">
+      <div className="pass-form  backdrop-blur-xl p-2 flex justify-center flex-col items-center">
 
-        <h3 className='text-lg relative font-normal text-zinc-700 my-2 mb-3 pb-1 before:h-[2px] before:w-36 before:bg-black/60 before:absolute before:bottom-0'>Enter username and password that you want to keep.</h3>
-        <div className='flex flex-col gap-3'>
+        <h3 className='text-lg relative font-normal text-zinc-700 my-2 mb-5 pb-1 before:h-[2px] before:w-36 before:bg-blue-700 before:absolute before:bottom-0'>Enter username and password that you want to keep.</h3>
+        <div className='flex flex-col gap-3 sm:w-fit w-full'>
           <div>
             <input
             type="text"
@@ -93,11 +93,11 @@ const Passmanager = () => {
             name='username'
             value={credentials.username}
             onChange={changeHandler}
-            className='w-96 h-8 rounded-2xl px-4 border border-gray-500 outline-indigo-400'
+            className='sm:w-96 w-full h-8 rounded-2xl px-4 border border-gray-500 outline-indigo-400'
             />
           </div>
 
-          <div className='relative w-fit'>
+          <div className='relative sm:w-fit w-full'>
             <input
             type="password"
             placeholder='Password'
@@ -105,11 +105,11 @@ const Passmanager = () => {
             value={credentials.password}
             onChange={changeHandler}
             ref={passRef}
-            className='w-96 h-8 rounded-2xl px-4 border border-gray-500 outline-indigo-400'
+            className='sm:w-96 w-full h-8 rounded-2xl px-4 border border-gray-500 outline-indigo-400'
             />
 
             <span>
-              <button className='font-bold absolute right-3 py-1 text-xl' onClick={RefHandler}>+</button>
+              <i className="fa-regular fa-eye absolute right-3 pt-2" onClick={RefHandler}></i>
             </span>
           </div>
         </div>
@@ -123,21 +123,21 @@ const Passmanager = () => {
       
       <div className="passwords-list py-8">
 
-        {userPasses.length === 0 ? <h2 className='mb-5 text-xl font-semibold ml-[2px]'>No Passwords To Show</h2>
+        {userPasses.length === 0 ? <h2 className='mb-5 text-xl font-semibold ml-[2px]'>Your Passwords Will Appear Here</h2>
         : <h2 className='mb-5 text-xl font-semibold ml-[2px]'>All Your Passwords</h2>}
         
         <div className='flex flex-wrap gap-4'>
           {
             userPasses.map((pass, i)=>(
               <div key={i}
-              className='border border-gray-600 text-black w-fit p-4 rounded-lg bg-[#1a3fac60]'
+              className='border border-gray-500 text-black w-fit p-4 rounded-lg bg-yellow-300 backdrop-blur-lg'
               >
                 <div className='flex flex-col'>
                   <span>Username : <span>{pass.username}</span></span>
                   <span className=''>
                     Password : <input type="password"  value={pass.password} readOnly className='w-36 bg-transparent border-none outline-none indent-1'/>
                     <button
-                    className='bg-indigo-600 text-white text-xs px-2 py-1 rounded-lg'
+                    className='bg-indigo-600 text-white text-xs px-2 py-1 hover:bg-indigo-500 rounded-lg'
                     onClick={passViewRefHandler}
                     >View</button>
                   </span>
