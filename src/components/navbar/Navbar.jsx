@@ -15,10 +15,35 @@ const Navbar = () => {
     <nav className='bg-[#16379a] z-20 top-0  flex'>
         <div className="nav-container flex justify-between items-center sm:px-20 px-12 py-4 w-screen relative">
             <div className="logo text-yellow-400 font-bold text-2xl">
-                Keeper
+                SecureVault
             </div>
 
-            <div className={`nav-links md:flex  ${navToggle ? " flex flex-col absolute top-5 bg-black/50 px-4 rounded-lg py-6 right-16 z-50" : "hidden"} list-none gap-6 text-zinc-200`}>
+            <div className={`nav-links md:flex hidden list-none gap-6 text-zinc-200`}>
+                <NavLink
+                className="hover:text-yellow-400"
+                to="/"
+                
+                >
+                  Home
+                </NavLink>
+                <a
+                className="hover:text-yellow-400"
+                href="#features"
+                
+                >
+                  Features
+                </a>
+                <NavLink
+                className="hover:text-yellow-400"
+                to="managers"
+                
+                >
+                  Get Started
+                </NavLink>
+            </div>
+
+
+            <div className={`nav-links-md md:hidden ${navToggle ? "flex flex-col absolute top-5 sm:right-16 right-7 z-50 bg-black/70 px-4 rounded-lg py-6" : "hidden"} list-none gap-6 text-zinc-200`}>
                 <NavLink
                 className="hover:text-yellow-400"
                 to="/"
@@ -26,13 +51,13 @@ const Navbar = () => {
                 >
                   Home
                 </NavLink>
-                <NavLink
+                <a
                 className="hover:text-yellow-400"
-                to="/"
+                href="#features"
                 onClick={navHandler}
                 >
                   Features
-                </NavLink>
+                </a>
                 <NavLink
                 className="hover:text-yellow-400"
                 to="managers"

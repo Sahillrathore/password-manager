@@ -14,7 +14,7 @@ const Hero = () => {
             Passwords Can
             Be Confusing.
           </h1>
-          <p className='text-zinc-100 text-lg mt-4'>We make it easier at Keeper. &nbsp;</p>
+          <p className='text-zinc-100 text-lg mt-4'>We make it easier. &nbsp;</p>
         </div>
 
         <div className="hero-mobile-img">

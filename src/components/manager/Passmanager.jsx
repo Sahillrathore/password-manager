@@ -80,7 +80,7 @@ const Passmanager = () => {
 
   return (
     <div className='py-4 px-6'>
-      <h2 className='font-bold text-3xl underline text-[#16379a] text-center'>Keeper</h2>
+      <h2 className='font-bold text-3xl underline text-[#16379a] text-center'>SecureVault</h2>
 
       <div className="pass-form  backdrop-blur-xl p-2 flex justify-center flex-col items-center">
 
@@ -109,7 +109,7 @@ const Passmanager = () => {
             />
 
             <span>
-              <i className="fa-regular fa-eye absolute right-3 pt-2" onClick={RefHandler}></i>
+              <i className="fa-regular fa-eye absolute right-3 pt-2 cursor-pointer" onClick={RefHandler}></i>
             </span>
           </div>
         </div>

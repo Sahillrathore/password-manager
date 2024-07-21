@@ -31,12 +31,12 @@ const data = [
 const Features = () => {
 
     return (
-        <>
+        <div id='features'>
 
             <h2 className='text-5xl font-bold text-center text-yellow-400 mb-4 mt-2'>Features</h2>
             {
                 data.map((item, i) => (
-                    <section className={`flex ${item.flexD} flex-col-reverse md:gap-36 gap-5 md:py-12 py-6 sm:px-12 px-4 justify-center items-center`} key={i}>
+                    <section className={`flex ${item.flexD} flex-col-reverse md:gap-36 gap-5 md:py-12 py-6 sm:px-12 px-4 justify-center items-center`} id="" key={i}>
                         <div className={`left flex justify-center flex-col md:w-fit w-full `}>
                             <h3 className='text-3xl font-semibold mb-6 text-[#16379a]'>{item.title}</h3>
                             <p className='sm:w-80 xs:w-80 w-72'>{item.para}</p>
@@ -64,7 +64,7 @@ const Features = () => {
                 ))
             }
 
-        </>
+        </div>
     )
 }
 
