@@ -1,8 +1,8 @@
 import React from 'react'
-import Navbar from './components/navbar/Navbar'
 import { BrowserRouter, Route, Routes } from 'react-router-dom'
-import Homepage from './components/homepage/Homepage'
-import Passmanager from './components/manager/Passmanager'
+import Navbar from './components/Navbar'
+import Passmanager from './pages/Passmanager'
+import Homepage from './components/Homepage'
 
 const App = () => {
   return (
