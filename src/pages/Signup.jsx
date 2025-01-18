@@ -1,5 +1,7 @@
 import React, { useState } from "react";
-import Login from "../components/Login";
+import Login from "../components/Login"; 
+import { createUserWithEmailAndPassword } from "firebase/auth";
+import { auth } from "../firebase";
 
 const SignUp = () => {
 
@@ -9,6 +11,8 @@ const SignUp = () => {
         email: '',
         password: '',
     });
+    const [error, setError] = useState(null);
+    const [success, setSuccess] = useState(false);
 
     const handleChange = (e) => {
         const { name, value } = e.target;
@@ -18,11 +22,19 @@ const SignUp = () => {
         }));
     };
 
-    const handleSubmit = (e) => {
+    const handleSignup = async (e) => {
         e.preventDefault();
-        console.log(formData);
-    }
+        setError(null);
+        setSuccess(false);
 
+        try {
+            const userCredential = await createUserWithEmailAndPassword(auth, formData.email, formData.password);
+            console.log("User created:", userCredential.user);
+            setSuccess(true);
+        } catch (err) {
+            setError(err.message);
+        }
+    };
     return (
         <div className="min-h-[93vh] flex items-center justify-center bg-gray-100">
             <div className="bg-white rounded-lg  h-fit shadow-lg overflow-hidden flex w-3/4 max-w-4xl">
@@ -51,7 +63,7 @@ const SignUp = () => {
                                         placeholder="Enter your name"
                                     />
                                 </div>
-                               
+
                                 <div className="mb-4">
                                     <label className="block text-gray-700 text-sm font-bold mb-2" htmlFor="email">
                                         Email Address:
@@ -84,7 +96,7 @@ const SignUp = () => {
                                 <button
                                     type="submit"
                                     className="w-full bg-purple-600 text-white py-2 rounded-md text-lg hover:bg-purple-700 transition duration-200 mt-12"
-                                    onClick={handleSubmit}
+                                    onClick={handleSignup}
                                 >
                                     Create an account
                                 </button>

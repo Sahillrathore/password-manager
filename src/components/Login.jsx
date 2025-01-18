@@ -1,6 +1,32 @@
-import React from 'react'
+import React, { useState } from 'react'
+import { signInWithEmailAndPassword } from "firebase/auth";
+import { auth } from "../firebase";
 
 const Login = ({ authMethod, setAuthMethod }) => {
+
+    const [formData, setFormData] = useState({
+        email: '',
+        password: ''
+    });
+
+    const handleChange = (e) => {
+        const { name, value } = e.target;
+        setFormData({ ...formData, [name]: value });
+    };
+
+    const handleLogin = async (e) => {
+        e.preventDefault();
+        setError(null);
+
+        try {
+            const userCredential = await signInWithEmailAndPassword(auth, formData.email, formData.password);
+            console.log("Logged in user:", userCredential.user);
+        } catch (err) {
+            setError(err.message);
+        }
+    };
+
+    
     return (
         <div className="w-full md:w-1/2 p-8 min-h-[595px] max-h-[595px] ">
             <h2 className="text-3xl font-bold text-gray-800 mb-3">Log in</h2>
@@ -14,6 +40,8 @@ const Login = ({ authMethod, setAuthMethod }) => {
                     <input
                         type="email"
                         id="email"
+                        name='email'
+                        onChange={handleChange}
                         className="w-full px-4 py-2 border border-gray-300 rounded-md focus:ring-2 focus:ring-purple-500 focus:outline-none"
                         placeholder="Enter your email"
                     />
@@ -25,6 +53,8 @@ const Login = ({ authMethod, setAuthMethod }) => {
                     <input
                         type="password"
                         id="password"
+                        name='password'
+                        onChange={handleChange}
                         className="w-full px-4 py-2 border border-gray-300 rounded-md focus:ring-2 focus:ring-purple-500 focus:outline-none"
                         placeholder="Enter your password"
                     />
@@ -33,6 +63,7 @@ const Login = ({ authMethod, setAuthMethod }) => {
                 <button
                     type="submit"
                     className="w-full bg-purple-600 text-white py-2 rounded-md text-lg hover:bg-purple-700 transition duration-200 mt-[9.5rem]"
+                    onClick={()=>{handleLogin}}
                 >
                     Login
                 </button>
