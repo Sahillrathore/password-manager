@@ -7,7 +7,7 @@ const Navbar = () => {
   const [navToggle, setNavToggle] = useState(false);
   const navRef = useRef();
   const { user, setUser } = useUserContext();
-  console.log(user.uid);
+  // console.log(user.uid);
 
 
   const navHandler = () => {

@@ -19,8 +19,6 @@ const Login = ({ authMethod, setAuthMethod }) => {
         const { name, value } = e.target;
         setFormData({ ...formData, [name]: value });
     };
-
-    console.log(user);
     
     const handleLogin = async (e) => {
         e.preventDefault();
@@ -33,6 +31,8 @@ const Login = ({ authMethod, setAuthMethod }) => {
             navigate('/managers')
         } catch (err) {
             setError(err.message);
+            console.log(err.message);
+            
         }
     };
 

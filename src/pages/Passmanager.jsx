@@ -1,60 +1,64 @@
 import React, { useEffect, useRef, useState } from 'react'
 import Navbar from '../components/Navbar';
+import { db } from "../firebase";
+import { doc, setDoc, collection, addDoc, getDocs, onSnapshot } from "firebase/firestore";
+import { useUserContext } from '../context/userContex';
 
 const Passmanager = () => {
 
+  const { user } = useUserContext();
   const [credentials, setCredentials] = useState({
     username: "",
-    password: ""
+    password: "",
+    site: ""
   });
   const [userPasses, setUserPasses] = useState([]);
   const [showPass, setShowPass] = useState(true);
-  const [passHidden, setPassHidden] = useState(true);
+  const [loading, setLoading] = useState(false);
 
   const passRef = useRef();
-  const passViewRef = useRef();
 
-  useEffect(()=>{
+  useEffect(() => {
     const userPass = localStorage.getItem("password");
-    if(userPass) {
+    if (userPass) {
       setUserPasses(JSON.parse(userPass))
     }
-  },[])
+  }, [])
 
   const changeHandler = (e) => {
-    const {name, value} = e.target;
-    setCredentials({...credentials, [name]:value});
+    const { name, value } = e.target;
+    setCredentials({ ...credentials, [name]: value });
   }
 
   const btnHandler = () => {
-    const randomId = Math.random()*10000;
-    setUserPasses([...userPasses, {...credentials, id: randomId}]);
-    localStorage.setItem("password", JSON.stringify([...userPasses, credentials]))
-    
-    credentials.username = "";
-    credentials.password = "";
+    const randomId = Math.random() * 10000;
+    // setUserPasses([...userPasses, {...credentials, id: randomId}]);
+    // localStorage.setItem("password", JSON.stringify([...userPasses, credentials]))
+
     // console.log(userPasses);
+
+    savePassword();
   }
-  const deletePass = (id) => { 
+  const deletePass = (id) => {
     let cnfrm = confirm("Do You Really Want To Delete This Password?")
-    if(cnfrm) {
+    if (cnfrm) {
       setUserPasses(userPasses.filter(pass => pass.id != id));
       localStorage.setItem("password", JSON.stringify(userPasses.filter(pass => pass.id != id)))
     }
-   }
+  }
 
-   const editPass = (id) => { 
+  const editPass = (id) => {
     // console.log(id);
     setCredentials(userPasses.filter(pass => pass.id === id)[0]);
     setUserPasses(userPasses.filter(pass => pass.id != id));
     // localStorage.setItem("password", JSON.stringify(userPasses.filter(pass => pass.id != id)))
-   }
+  }
 
   const RefHandler = () => {
 
     setShowPass(prev => setShowPass(!prev));
 
-    if(showPass === true) {
+    if (showPass === true) {
       const inp = passRef.current.type = "text";
     }
     else {
@@ -79,9 +83,70 @@ const Passmanager = () => {
     }
   }
 
-  return (
-    <>
-    <Navbar/>
+  const savePassword = async () => {
+    const uid = user?.uid;
+    try {
+      if (!uid) {
+        throw new Error("User UID is required to save a password.");
+      }
+
+      // Reference to the user's subcollection
+      const userPasswordsCollection = collection(db, "passwords", uid, "userPasswords");
+
+      // Add the password as a new document
+      await addDoc(userPasswordsCollection, credentials);
+
+      console.log("Password saved successfully!");
+
+      credentials.username = "";
+      credentials.password = "";
+      credentials.site = "";
+
+    } catch (error) {
+      console.error("Error saving password:", error.message);
+    }
+  };
+
+  useEffect(() => {
+    if (!user?.uid) {
+      console.error("User UID is required to retrieve passwords.");
+      return;
+    }
+
+    const uid = user.uid;
+
+    // Reference to the user's subcollection
+    const userPasswordsCollection = collection(db, "passwords", uid, "userPasswords");
+
+    // Set up a Firestore listener
+    const unsubscribe = onSnapshot(
+      userPasswordsCollection,
+      (snapshot) => {
+        const passwords = snapshot.docs.map((doc) => ({
+          id: doc.id,
+          ...doc.data(),
+        }));
+        setUserPasses(passwords);
+        setLoading(false);
+      },
+      (error) => {
+        console.error("Error listening to passwords collection:", error.message);
+        setLoading(false);
+      }
+    );
+
+    // Cleanup listener on component unmount
+    return () => unsubscribe();
+  }, [user?.uid]);
+
+
+if (loading) {
+  return <div className='font-bold text-xl flex items-center justify-center h-screen w-full'>Loading..</div>
+}
+
+return (
+  <>
+    <Navbar />
     <div className='py-4 px-6'>
       <h2 className='font-bold text-3xl underline text-[#16379a] text-center'>SecureVault</h2>
 
@@ -91,24 +156,35 @@ const Passmanager = () => {
         <div className='flex flex-col gap-3 sm:w-fit w-full'>
           <div>
             <input
-            type="text"
-            placeholder='Username'
-            name='username'
-            value={credentials.username}
-            onChange={changeHandler}
-            className='sm:w-96 w-full h-8 rounded-2xl px-4 border border-gray-500 outline-indigo-400'
+              type="text"
+              placeholder='Site'
+              name='site'
+              value={credentials.site}
+              onChange={changeHandler}
+              className='sm:w-96 w-full h-8 rounded-2xl px-4 border border-gray-500 outline-indigo-400'
+            />
+          </div>
+
+          <div>
+            <input
+              type="text"
+              placeholder='Username'
+              name='username'
+              value={credentials.username}
+              onChange={changeHandler}
+              className='sm:w-96 w-full h-8 rounded-2xl px-4 border border-gray-500 outline-indigo-400'
             />
           </div>
 
           <div className='relative sm:w-fit w-full'>
             <input
-            type="password"
-            placeholder='Password'
-            name='password'
-            value={credentials.password}
-            onChange={changeHandler}
-            ref={passRef}
-            className='sm:w-96 w-full h-8 rounded-2xl px-4 border border-gray-500 outline-indigo-400'
+              type="password"
+              placeholder='Password'
+              name='password'
+              value={credentials.password}
+              onChange={changeHandler}
+              ref={passRef}
+              className='sm:w-96 w-full h-8 rounded-2xl px-4 border border-gray-500 outline-indigo-400'
             />
 
             <span>
@@ -117,44 +193,44 @@ const Passmanager = () => {
           </div>
         </div>
         <button
-        onClick={btnHandler}
-        className='px-5 py-2 mt-3 bg-indigo-600 text-white rounded-2xl hover:bg-indigo-700'
+          onClick={btnHandler}
+          className='px-5 py-2 mt-3 bg-indigo-600 text-white rounded-2xl hover:bg-indigo-700'
         >
-        Save
+          Save
         </button>
       </div>
-      
+
       <div className="passwords-list py-8">
 
         {userPasses.length === 0 ? <h2 className='mb-5 text-xl font-semibold ml-[2px]'>Your Passwords Will Appear Here</h2>
-        : <h2 className='mb-5 text-xl font-semibold ml-[2px]'>All Your Passwords</h2>}
-        
+          : <h2 className='mb-5 text-xl font-semibold ml-[2px]'>All Your Passwords</h2>}
+
         <div className='flex flex-wrap gap-4'>
           {
-            userPasses.map((pass, i)=>(
+            userPasses.map((pass, i) => (
               <div key={i}
-              className='border border-gray-500 text-black w-fit p-4 rounded-lg bg-yellow-300 backdrop-blur-lg'
+                className='border border-gray-500 text-black w-fit p-4 rounded-lg bg-yellow-300 backdrop-blur-lg'
               >
                 <div className='flex flex-col'>
                   <span>Username : <span>{pass.username}</span></span>
                   <span className=''>
-                    Password : <input type="password"  value={pass.password} readOnly className='w-36 bg-transparent border-none outline-none indent-1'/>
+                    Password : <input type="password" value={pass.password} readOnly className='w-36 bg-transparent border-none outline-none indent-1' />
                     <button
-                    className='bg-indigo-600 text-white text-xs px-2 py-1 hover:bg-indigo-500 rounded-lg'
-                    onClick={passViewRefHandler}
+                      className='bg-indigo-600 text-white text-xs px-2 py-1 hover:bg-indigo-500 rounded-lg'
+                      onClick={passViewRefHandler}
                     >View</button>
                   </span>
                 </div>
 
                 <div className="password-action-btns flex gap-2 mt-3">
-                <button
-                className='text-xs px-2 py-1 bg-indigo-600 hover:bg-indigo-500 text-white rounded-md'
-                onClick={()=>{editPass(pass.id)}}
-                >Edit</button>
-                <button
-                className='text-xs px-2 py-1 bg-indigo-600 hover:bg-indigo-500 text-white rounded-md'
-                onClick={()=>{deletePass(pass.id)}}
-                >Del</button>
+                  <button
+                    className='text-xs px-2 py-1 bg-indigo-600 hover:bg-indigo-500 text-white rounded-md'
+                    onClick={() => { editPass(pass.id) }}
+                  >Edit</button>
+                  <button
+                    className='text-xs px-2 py-1 bg-indigo-600 hover:bg-indigo-500 text-white rounded-md'
+                    onClick={() => { deletePass(pass.id) }}
+                  >Del</button>
                 </div>
 
               </div>
@@ -163,8 +239,8 @@ const Passmanager = () => {
         </div>
       </div>
     </div>
-    </>
-  )
+  </>
+)
 }
 
 export default Passmanager

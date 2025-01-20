@@ -37,6 +37,8 @@ const SignUp = () => {
             setUser(userCredential?.user);
         } catch (err) {
             setError(err.message);
+            console.log(err.message);
+            
         }
     };
     return (
