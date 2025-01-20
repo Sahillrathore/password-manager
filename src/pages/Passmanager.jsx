@@ -1,4 +1,5 @@
 import React, { useEffect, useRef, useState } from 'react'
+import Navbar from '../components/Navbar';
 
 const Passmanager = () => {
 
@@ -79,6 +80,8 @@ const Passmanager = () => {
   }
 
   return (
+    <>
+    <Navbar/>
     <div className='py-4 px-6'>
       <h2 className='font-bold text-3xl underline text-[#16379a] text-center'>SecureVault</h2>
 
@@ -160,6 +163,7 @@ const Passmanager = () => {
         </div>
       </div>
     </div>
+    </>
   )
 }
 

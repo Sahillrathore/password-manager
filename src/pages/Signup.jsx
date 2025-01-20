@@ -2,9 +2,12 @@ import React, { useState } from "react";
 import Login from "../components/Login"; 
 import { createUserWithEmailAndPassword } from "firebase/auth";
 import { auth } from "../firebase";
+import { useUserContext } from "../context/userContex";
+import { RxCross1 } from "react-icons/rx";
 
 const SignUp = () => {
 
+    const {user, setUser} = useUserContext();
     const [authMethod, setAuthMethod] = useState('signup');
     const [formData, setFormData] = useState({
         name: '',
@@ -31,12 +34,14 @@ const SignUp = () => {
             const userCredential = await createUserWithEmailAndPassword(auth, formData.email, formData.password);
             console.log("User created:", userCredential.user);
             setSuccess(true);
+            setUser(userCredential?.user);
         } catch (err) {
             setError(err.message);
         }
     };
     return (
-        <div className="min-h-[93vh] flex items-center justify-center bg-gray-100">
+        <div className="min-h-screen flex items-center justify-center bg-gray-100">
+            {/* <RxCross1 className="absolute top-12 right-12 cursor-pointer"/> */}
             <div className="bg-white rounded-lg  h-fit shadow-lg overflow-hidden flex w-3/4 max-w-4xl">
                 {/* Left Image Section */}
                 <div className="hidden md:block w-1/2 bg-cover bg-center" style={{ backgroundImage: `url('/loginbg.png')` }}>

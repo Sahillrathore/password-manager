@@ -1,6 +1,8 @@
 import React, { useState } from 'react'
 import { signInWithEmailAndPassword } from "firebase/auth";
 import { auth } from "../firebase";
+import { useUserContext } from '../context/userContex';
+import { useNavigate } from 'react-router-dom';
 
 const Login = ({ authMethod, setAuthMethod }) => {
 
@@ -8,19 +10,27 @@ const Login = ({ authMethod, setAuthMethod }) => {
         email: '',
         password: ''
     });
+    const [error, setError] = useState(null);
+    const { user, setUser } = useUserContext();
+
+    const navigate = useNavigate();
 
     const handleChange = (e) => {
         const { name, value } = e.target;
         setFormData({ ...formData, [name]: value });
     };
 
+    console.log(user);
+    
     const handleLogin = async (e) => {
         e.preventDefault();
         setError(null);
 
         try {
             const userCredential = await signInWithEmailAndPassword(auth, formData.email, formData.password);
-            console.log("Logged in user:", userCredential.user);
+            setUser(userCredential?.user);
+            console.log(user);
+            navigate('/managers')
         } catch (err) {
             setError(err.message);
         }
@@ -63,7 +73,7 @@ const Login = ({ authMethod, setAuthMethod }) => {
                 <button
                     type="submit"
                     className="w-full bg-purple-600 text-white py-2 rounded-md text-lg hover:bg-purple-700 transition duration-200 mt-[9.5rem]"
-                    onClick={()=>{handleLogin}}
+                    onClick={handleLogin}
                 >
                     Login
                 </button>
