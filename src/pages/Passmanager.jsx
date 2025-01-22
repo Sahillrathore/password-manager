@@ -4,6 +4,7 @@ import { db } from "../firebase";
 import { doc, setDoc, collection, addDoc, getDocs, onSnapshot, deleteDoc } from "firebase/firestore";
 import { useUserContext } from '../context/userContex';
 import CryptoJS, { enc } from 'crypto-js';
+import EditPassword from '../components/EditPassword';
 
 const Passmanager = () => {
 
@@ -16,6 +17,8 @@ const Passmanager = () => {
   const [userPasses, setUserPasses] = useState([]);
   const [showPass, setShowPass] = useState(true);
   const [loading, setLoading] = useState(false);
+  const [showEditModal, setShowEditModal] = useState(false);
+  const [passToEdit, setPassToEdit] = useState();
 
   const passRef = useRef();
 
@@ -87,12 +90,12 @@ const Passmanager = () => {
     }
   };
 
-  const editPass = (id) => {
-    // console.log(id);
-    setCredentials(userPasses.filter(pass => pass.id === id)[0]);
-    setUserPasses(userPasses.filter(pass => pass.id != id));
-    // localStorage.setItem("password", JSON.stringify(userPasses.filter(pass => pass.id != id)))
-  }
+  const editPassword = async (id) => {
+    console.log(id);
+    
+    setPassToEdit(id);
+    setShowEditModal(true);
+  };
 
   const RefHandler = () => {
 
@@ -205,7 +208,7 @@ if (loading) {
 return (
   <>
     <Navbar />
-    <div className='py-4 px-6'>
+    <div className='py-4 px-6 w-full overflow-hidden relative'>
       <h2 className='font-bold text-3xl underline text-[#16379a] text-center'>SecureVault</h2>
 
       <div className="pass-form  backdrop-blur-xl p-2 flex justify-center flex-col items-center">
@@ -284,7 +287,9 @@ return (
                 <div className="password-action-btns flex gap-2 mt-3">
                   <button
                     className='text-xs px-2 py-1 bg-indigo-600 hover:bg-indigo-500 text-white rounded-md'
-                    onClick={() => { editPass(pass.id) }}
+                    onClick={() => { 
+                      editPassword(pass.id) 
+                    }}
                   >Edit</button>
                   <button
                     className='text-xs px-2 py-1 bg-indigo-600 hover:bg-indigo-500 text-white rounded-md'
@@ -297,6 +302,11 @@ return (
           }
         </div>
       </div>
+
+      {
+        showEditModal && 
+        <EditPassword user={user} passToEdit={passToEdit} setShowEditModal={setShowEditModal} />
+      }
     </div>
   </>
 )

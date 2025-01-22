@@ -9,3 +9,51 @@
 html {
     scroll-behavior: smooth;
 }
+
+@keyframes dropAnimation {
+    from {
+        transform: translateY(-60%);
+        opacity: 0;
+    }
+
+    to {
+        transform: translateY(0);
+        opacity: 1;
+    }
+}
+
+.drop-animation {
+    animation: dropAnimation 0.5s ease-out;
+}
+
+@keyframes dropIn {
+    from {
+        transform: translateY(-100%);
+        opacity: 0;
+    }
+
+    to {
+        transform: translateY(0);
+        opacity: 1;
+    }
+}
+
+@keyframes slideOut {
+    from {
+        transform: translateY(0);
+        opacity: 1;
+    }
+
+    to {
+        transform: translateY(-100%);
+        opacity: 0;
+    }
+}
+
+.modal-open {
+    animation: dropIn 0.5s ease-out forwards;
+}
+
+.modal-close {
+    animation: slideOut 0.5s ease-in forwards;
+}
