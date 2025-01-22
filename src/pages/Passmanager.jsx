@@ -1,8 +1,9 @@
 import React, { useEffect, useRef, useState } from 'react'
 import Navbar from '../components/Navbar';
 import { db } from "../firebase";
-import { doc, setDoc, collection, addDoc, getDocs, onSnapshot } from "firebase/firestore";
+import { doc, setDoc, collection, addDoc, getDocs, onSnapshot, deleteDoc } from "firebase/firestore";
 import { useUserContext } from '../context/userContex';
+import CryptoJS, { enc } from 'crypto-js';
 
 const Passmanager = () => {
 
@@ -18,12 +19,34 @@ const Passmanager = () => {
 
   const passRef = useRef();
 
-  useEffect(() => {
-    const userPass = localStorage.getItem("password");
-    if (userPass) {
-      setUserPasses(JSON.parse(userPass))
+  const encryptData = (data) => {
+    const secretKey = import.meta.env.VITE_SECRET_KEY; // Use VITE_ prefix for Vite projects
+    if (!secretKey) {
+      throw new Error('SECRET_KEY is not defined');
     }
-  }, [])
+    return CryptoJS.AES.encrypt(JSON.stringify(data), secretKey).toString();
+  };
+
+  const decryptData = (ciphertext) => {
+    try {
+      const secretKey = import.meta.env.VITE_SECRET_KEY;
+      if (!secretKey) {
+        throw new Error('SECRET_KEY is not defined');
+      }
+
+      const bytes = CryptoJS.AES.decrypt(ciphertext, secretKey);
+      const decryptedData = bytes.toString(CryptoJS.enc.Utf8);
+
+      if (!decryptedData) {
+        throw new Error('Decryption failed or returned empty data');
+      }
+
+      return JSON.parse(decryptedData);
+    } catch (error) {
+      console.error('Error decrypting data:', error.message);
+      return null; // Return null or handle the error appropriately
+    }
+  };
 
   const changeHandler = (e) => {
     const { name, value } = e.target;
@@ -39,13 +62,30 @@ const Passmanager = () => {
 
     savePassword();
   }
-  const deletePass = (id) => {
-    let cnfrm = confirm("Do You Really Want To Delete This Password?")
+  const deletePass = async (id) => {
+    const cnfrm = confirm("Do You Really Want To Delete This Password?");
     if (cnfrm) {
-      setUserPasses(userPasses.filter(pass => pass.id != id));
-      localStorage.setItem("password", JSON.stringify(userPasses.filter(pass => pass.id != id)))
+      try {
+        const uid = user?.uid;
+        if (!uid) {
+          throw new Error("User UID is required to delete a password.");
+        }
+
+        // Reference to the specific password document
+        const passwordDocRef = doc(db, "passwords", uid, "userPasswords", id);
+
+        // Delete the document from Firestore
+        await deleteDoc(passwordDocRef);
+
+        // Update the state to remove the deleted password locally
+        setUserPasses(userPasses.filter(pass => pass.id !== id));
+
+        console.log("Password deleted successfully!");
+      } catch (error) {
+        console.error("Error deleting password:", error.message);
+      }
     }
-  }
+  };
 
   const editPass = (id) => {
     // console.log(id);
@@ -84,20 +124,38 @@ const Passmanager = () => {
   }
 
   const savePassword = async () => {
+
     const uid = user?.uid;
+    if (!uid) {
+      console.error("User UID is required to save a password.");
+      return;
+    }
+
     try {
-      if (!uid) {
-        throw new Error("User UID is required to save a password.");
+      // Validate credentials
+      if (!credentials.password || !credentials.site || !credentials.username) {
+        console.error("All fields (site, username, password) are required.");
+        return;
       }
 
-      // Reference to the user's subcollection
+      // Encrypt each field individually
+      const encryptedSite = encryptData(credentials.site);
+      const encryptedUsername = encryptData(credentials.username);
+      const encryptedPassword = encryptData(credentials.password);
+
+      // Reference to the user's subcollection in Firestore
       const userPasswordsCollection = collection(db, "passwords", uid, "userPasswords");
 
-      // Add the password as a new document
-      await addDoc(userPasswordsCollection, credentials);
+      // Add the encrypted data as separate fields in a new document
+      await addDoc(userPasswordsCollection, {
+        site: encryptedSite,
+        username: encryptedUsername,
+        password: encryptedPassword,
+      });
 
       console.log("Password saved successfully!");
 
+      // Clear credentials after saving
       credentials.username = "";
       credentials.password = "";
       credentials.site = "";
@@ -159,7 +217,7 @@ return (
               type="text"
               placeholder='Site'
               name='site'
-              value={credentials.site}
+              value={decryptData(credentials.site)}
               onChange={changeHandler}
               className='sm:w-96 w-full h-8 rounded-2xl px-4 border border-gray-500 outline-indigo-400'
             />
@@ -170,7 +228,7 @@ return (
               type="text"
               placeholder='Username'
               name='username'
-              value={credentials.username}
+              value={decryptData(credentials.username)}
               onChange={changeHandler}
               className='sm:w-96 w-full h-8 rounded-2xl px-4 border border-gray-500 outline-indigo-400'
             />
@@ -181,7 +239,7 @@ return (
               type="password"
               placeholder='Password'
               name='password'
-              value={credentials.password}
+              value={decryptData(credentials.password)}
               onChange={changeHandler}
               ref={passRef}
               className='sm:w-96 w-full h-8 rounded-2xl px-4 border border-gray-500 outline-indigo-400'
@@ -212,9 +270,10 @@ return (
                 className='border border-gray-500 text-black w-fit p-4 rounded-lg bg-yellow-300 backdrop-blur-lg'
               >
                 <div className='flex flex-col'>
-                  <span>Username : <span>{pass.username}</span></span>
+                  <span>Site : <span>{decryptData(pass.site)}</span></span>
+                  <span>Username : <span>{decryptData(pass.username)}</span></span>
                   <span className=''>
-                    Password : <input type="password" value={pass.password} readOnly className='w-36 bg-transparent border-none outline-none indent-1' />
+                    Password : <input type="password" value={decryptData(pass?.password)} readOnly className='w-36 bg-transparent border-none outline-none indent-1' />
                     <button
                       className='bg-indigo-600 text-white text-xs px-2 py-1 hover:bg-indigo-500 rounded-lg'
                       onClick={passViewRefHandler}

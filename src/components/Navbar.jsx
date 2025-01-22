@@ -1,10 +1,13 @@
 import React, { useRef, useState } from 'react'
 import { NavLink } from 'react-router-dom'
 import { useUserContext } from '../context/userContex';
+import { CgProfile } from 'react-icons/cg';
 
 const Navbar = () => {
 
   const [navToggle, setNavToggle] = useState(false);
+  const [profileView,setProfileView] = useState(false);
+
   const navRef = useRef();
   const { user, setUser } = useUserContext();
   // console.log(user.uid);
@@ -17,6 +20,7 @@ const Navbar = () => {
 
   const handleLogout = () => {
     setUser(null);
+    setProfileView(!profileView);
   }
 
   return (
@@ -43,11 +47,7 @@ const Navbar = () => {
           </a>
           {
             user ?
-              <button className='px-4 py-1.5 bg-transparent border font-semibold rounded-md text-sm hover:bg-blue-600 transition-colors'
-              onClick={handleLogout}
-              >
-                Logout
-              </button>
+              <CgProfile className='text-2xl cursor-pointer' onClick={()=>{setProfileView(!profileView)}} />
               :
               <NavLink
                 className="hover:text-yellow-400"
@@ -56,6 +56,16 @@ const Navbar = () => {
               >
                 Get Started
               </NavLink>
+          }
+          {
+            profileView && 
+            <div className='p-3 bg-  absolute right-8 top-14 z-50'>
+                <button className='px-4 py-1.5 bg-transparent border font-semibold rounded-md text-sm hover:bg-blue-600 transition-colors'
+                  onClick={handleLogout}
+                >
+                  Logout
+                </button>
+            </div>
           }
         </div>
 
