@@ -5,6 +5,12 @@ import { doc, setDoc, collection, addDoc, getDocs, onSnapshot, deleteDoc } from 
 import { useUserContext } from '../context/userContex';
 import CryptoJS, { enc } from 'crypto-js';
 import EditPassword from '../components/EditPassword';
+import { BiCopy } from 'react-icons/bi';
+import { CiEdit } from 'react-icons/ci';
+import { AiOutlineDelete } from 'react-icons/ai';
+import { FaRegEye } from 'react-icons/fa';
+import { RiEdit2Line } from 'react-icons/ri';
+import { IoMdCopy } from 'react-icons/io';
 
 const Passmanager = () => {
 
@@ -21,6 +27,7 @@ const Passmanager = () => {
   const [passToEdit, setPassToEdit] = useState();
 
   const passRef = useRef();
+  const inputRefs = useRef([]);
 
   const encryptData = (data) => {
     const secretKey = import.meta.env.VITE_SECRET_KEY; // Use VITE_ prefix for Vite projects
@@ -92,7 +99,7 @@ const Passmanager = () => {
 
   const editPassword = async (id) => {
     console.log(id);
-    
+
     setPassToEdit(id);
     setShowEditModal(true);
   };
@@ -109,20 +116,20 @@ const Passmanager = () => {
     }
   }
 
-  const passViewRefHandler = (e) => {
-    // const viewPass = passViewRef
-    // console.log(viewPass);
-    // console.log(i);
-    // ref={passViewRef}
-
-    let sibling = e.target.previousElementSibling;
-    // console.log(sibling.type);
-
-    if (sibling.type === "password") {
-      sibling.type = "text"
+  const passViewRefHandler = (index) => {
+    const inputField = inputRefs.current[index];
+    if (inputField.type === 'password') {
+      inputField.type = 'text';
+    } else {
+      inputField.type = 'password';
     }
-    else {
-      sibling.type = "password"
+  };
+
+  const copyPassword = (index) => {
+    const password = inputRefs.current[index]?.value;
+    if (password) {
+      navigator.clipboard.writeText(password);
+      // alert('Password copied to clipboard!');
     }
   }
 
@@ -201,115 +208,145 @@ const Passmanager = () => {
   }, [user?.uid]);
 
 
-if (loading) {
-  return <div className='font-bold text-xl flex items-center justify-center h-screen w-full'>Loading..</div>
-}
+  if (loading) {
+    return <div className='font-bold text-xl flex items-center justify-center h-screen w-full'>Loading..</div>
+  }
 
-return (
-  <>
-    <Navbar />
-    <div className='py-4 px-6 w-full overflow-hidden relative'>
-      <h2 className='font-bold text-3xl underline text-[#16379a] text-center'>SecureVault</h2>
+  return (
+    <>
+      <Navbar />
+      <div className='py-4 px-6 w-full overflow-hidden relative'>
+        <h2 className='font-bold text-3xl underline text-[#16379a] text-center'>SecureVault</h2>
 
-      <div className="pass-form  backdrop-blur-xl p-2 flex justify-center flex-col items-center">
+        <div className="pass-form  backdrop-blur-xl p-2 flex justify-center flex-col items-center">
 
-        <h3 className='text-lg relative font-normal text-zinc-700 my-2 mb-5 pb-1 before:h-[2px] before:w-36 before:bg-blue-700 before:absolute before:bottom-0'>Enter username and password that you want to keep.</h3>
-        <div className='flex flex-col gap-3 sm:w-fit w-full'>
-          <div>
-            <input
-              type="text"
-              placeholder='Site'
-              name='site'
-              value={decryptData(credentials.site)}
-              onChange={changeHandler}
-              className='sm:w-96 w-full h-8 rounded-2xl px-4 border border-gray-500 outline-indigo-400'
-            />
+          <h3 className='text-lg relative font-normal text-zinc-700 my-2 mb-5 pb-1 before:h-[2px] before:w-36 before:bg-blue-700 before:absolute before:bottom-0'>Enter username and password that you want to keep.</h3>
+          <div className='flex flex-col gap-3 sm:w-fit w-full'>
+            <div>
+              <input
+                type="text"
+                placeholder='Site'
+                name='site'
+                value={credentials.site}
+                onChange={changeHandler}
+                className='sm:w-96 w-full h-8 rounded-2xl px-4 border border-gray-500 outline-indigo-400'
+              />
+            </div>
+
+            <div>
+              <input
+                type="text"
+                placeholder='Username'
+                name='username'
+                value={credentials.username}
+                onChange={changeHandler}
+                className='sm:w-96 w-full h-8 rounded-2xl px-4 border border-gray-500 outline-indigo-400'
+              />
+            </div>
+
+            <div className='relative sm:w-fit w-full'>
+              <input
+                type="password"
+                placeholder='Password'
+                name='password'
+                value={credentials.password}
+                onChange={changeHandler}
+                ref={passRef}
+                className='sm:w-96 w-full h-8 rounded-2xl px-4 border border-gray-500 outline-indigo-400'
+              />
+
+              <span>
+                {/* <i className="fa-regular fa-eye absolute right-3 pt-2 cursor-pointer" onClick={RefHandler}></i> */}
+                <FaRegEye className="absolute right-3 top-2 pt- cursor-pointer" onClick={RefHandler} />
+              </span>
+            </div>
           </div>
-
-          <div>
-            <input
-              type="text"
-              placeholder='Username'
-              name='username'
-              value={decryptData(credentials.username)}
-              onChange={changeHandler}
-              className='sm:w-96 w-full h-8 rounded-2xl px-4 border border-gray-500 outline-indigo-400'
-            />
-          </div>
-
-          <div className='relative sm:w-fit w-full'>
-            <input
-              type="password"
-              placeholder='Password'
-              name='password'
-              value={decryptData(credentials.password)}
-              onChange={changeHandler}
-              ref={passRef}
-              className='sm:w-96 w-full h-8 rounded-2xl px-4 border border-gray-500 outline-indigo-400'
-            />
-
-            <span>
-              <i className="fa-regular fa-eye absolute right-3 pt-2 cursor-pointer" onClick={RefHandler}></i>
-            </span>
-          </div>
+          <button
+            onClick={btnHandler}
+            className='px-5 py-2 mt-3 bg-indigo-600 text-white rounded-2xl hover:bg-indigo-700'
+          >
+            Save
+          </button>
         </div>
-        <button
-          onClick={btnHandler}
-          className='px-5 py-2 mt-3 bg-indigo-600 text-white rounded-2xl hover:bg-indigo-700'
-        >
-          Save
-        </button>
-      </div>
 
-      <div className="passwords-list py-8">
+        <div className="passwords-list py-8">
 
-        {userPasses.length === 0 ? <h2 className='mb-5 text-xl font-semibold ml-[2px]'>Your Passwords Will Appear Here</h2>
-          : <h2 className='mb-5 text-xl font-semibold ml-[2px]'>All Your Passwords</h2>}
+          {userPasses.length === 0 ? <h2 className='mb-5 text-xl font-semibold ml-[2px]'>Your Passwords Will Appear Here</h2>
+            : <h2 className='mb-5 text-xl font-semibold ml-[2px]'>All Your Passwords</h2>}
 
-        <div className='flex flex-wrap gap-4'>
-          {
-            userPasses.map((pass, i) => (
-              <div key={i}
-                className='border border-gray-500 text-black w-fit p-4 rounded-lg bg-yellow-300 backdrop-blur-lg'
+          <div className="flex flex-wrap gap-4">
+            {userPasses.map((pass, i) => (
+              <div
+                key={i}
+                className="border border-gray-500 text-black w-80 p-6 rounded-lg bg-yellow-300 backdrop-blur-lg"
               >
-                <div className='flex flex-col'>
-                  <span>Site : <span>{decryptData(pass.site)}</span></span>
-                  <span>Username : <span>{decryptData(pass.username)}</span></span>
-                  <span className=''>
-                    Password : <input type="password" value={decryptData(pass?.password)} readOnly className='w-36 bg-transparent border-none outline-none indent-1' />
-                    <button
-                      className='bg-indigo-600 text-white text-xs px-2 py-1 hover:bg-indigo-500 rounded-lg'
-                      onClick={passViewRefHandler}
-                    >View</button>
+                <div className="flex flex-col justify-center items-center gap-2">
+                  <span><span>{decryptData(pass.site)}</span></span>
+                  <span><span>{decryptData(pass.username)}</span></span>
+                  <span>
+                    
+                    <input
+                      type="password"
+                      ref={(el) => (inputRefs.current[i] = el)}
+                      value={decryptData(pass.password)}
+                      readOnly
+                      className="w-full bg-transparent border-none outline-none indent-1 text-center"
+                    />
+
+
                   </span>
                 </div>
-
-                <div className="password-action-btns flex gap-2 mt-3">
+                <div className="password-action-btns flex gap-3 mt-3 justify-center">
                   <button
-                    className='text-xs px-2 py-1 bg-indigo-600 hover:bg-indigo-500 text-white rounded-md'
-                    onClick={() => { 
-                      editPassword(pass.id) 
-                    }}
-                  >Edit</button>
+                    className="bg-indigo-00 text-black text-lg px-1 py-1  rounded-lg relative group"
+                    onClick={() => passViewRefHandler(i)}
+                  >
+                    <FaRegEye />
+                    <span className="absolute bottom-full left-1/2 transform -translate-x-1/2 mb- text-xs bg-gray-700 text-white py-1 px-2 rounded hidden group-hover:block transition-all duration-300">
+                      View
+                    </span>
+                  </button>
                   <button
-                    className='text-xs px-2 py-1 bg-indigo-600 hover:bg-indigo-500 text-white rounded-md'
-                    onClick={() => { deletePass(pass.id) }}
-                  >Del</button>
+                    className="text-lg px-1  text-black rounded-md relative group"
+                    onClick={() => editPassword(pass.id)}
+                  >
+                    <RiEdit2Line />
+                    <span className="absolute bottom-full left-1/2 transform -translate-x-1/2 mb- text-xs bg-gray-700 text-white py-1 px-2 rounded hidden group-hover:block transition-all duration-300">
+                      Edit
+                    </span>
+                  </button>
+                  <button
+                    className="text-lg  px-1  text-black rounded-md relative group"
+                    onClick={() => deletePass(pass.id)}
+                  >
+                    <AiOutlineDelete />
+                    <span className="absolute bottom-full left-1/2 transform -translate-x-1/2 mb- text-xs bg-gray-700 text-white py-1 px-2 rounded hidden group-hover:block transition-all duration-300">
+                      Delete
+                    </span>
+                  </button>
+                    <button
+                      className="relative group p-1 text-blue-600 text-xl"
+                      onClick={() => copyPassword(i)}
+                    >
+                      <IoMdCopy />
+                      {/* Tooltip */}
+                      <span className="absolute bottom-full left-1/2 transform -translate-x-1/2 mb-1 text-xs bg-gray-700 text-white py-1 px-2 rounded hidden group-hover:block transition-all duration-300">
+                        Copy
+                      </span>
+                    </button>
                 </div>
-
               </div>
-            ))
-          }
+            ))}
+          </div>
         </div>
-      </div>
 
-      {
-        showEditModal && 
-        <EditPassword user={user} passToEdit={passToEdit} setShowEditModal={setShowEditModal} />
-      }
-    </div>
-  </>
-)
+        {
+          showEditModal &&
+          <EditPassword user={user} passToEdit={passToEdit} setShowEditModal={setShowEditModal} />
+        }
+      </div>
+    </>
+  )
 }
 
 export default Passmanager
