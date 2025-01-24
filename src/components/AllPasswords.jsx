@@ -140,7 +140,7 @@ const AllPasswords = ({ setShowEditModal , setPassToEdit}) => {
                 </div>}
 
             <div className="flex flex-wrap gap-4">
-                {userPasses?.filter((data) => decryptData(data?.site).toLowerCase().includes(searchQuery.toLowerCase()))
+                {userPasses?.filter((data) => decryptData(data?.site)?.toLowerCase()?.includes(searchQuery?.toLowerCase()))
                     .map((pass, i) => (
                         <div
                             key={i}
