@@ -11,6 +11,7 @@ import { AiOutlineDelete } from 'react-icons/ai';
 import { FaRegEye } from 'react-icons/fa';
 import { RiEdit2Line } from 'react-icons/ri';
 import { IoMdCopy } from 'react-icons/io';
+import AllPasswords from '../components/AllPasswords';
 
 const Passmanager = () => {
 
@@ -25,6 +26,7 @@ const Passmanager = () => {
   const [loading, setLoading] = useState(false);
   const [showEditModal, setShowEditModal] = useState(false);
   const [passToEdit, setPassToEdit] = useState();
+  const [searchQuery, setSearchQuery] = useState('');
 
   const passRef = useRef();
   const inputRefs = useRef([]);
@@ -220,8 +222,8 @@ const Passmanager = () => {
 
         <div className="pass-form  backdrop-blur-xl p-2 flex justify-center flex-col items-center">
 
-          <h3 className='text-lg relative font-normal text-zinc-700 my-2 mb-5 pb-1 before:h-[2px] before:w-36 before:bg-blue-700 before:absolute before:bottom-0'>Enter username and password that you want to keep.</h3>
-          <div className='flex flex-col gap-3 sm:w-fit w-full'>
+          {/* <h3 className='text-lg relative font-normal text-zinc-700 my-2 mb-5 pb-1 before:h-[2px] before:w-36 before:bg-blue-700 before:absolute before:bottom-0'>Enter username and password that you want to keep.</h3> */}
+          <div className='flex flex-col gap-3 sm:w-fit w-full mt-3'>
             <div>
               <input
                 type="text"
@@ -269,76 +271,7 @@ const Passmanager = () => {
           </button>
         </div>
 
-        <div className="passwords-list py-8">
-
-          {userPasses.length === 0 ? <h2 className='mb-5 text-xl font-semibold ml-[2px]'>Your Passwords Will Appear Here</h2>
-            : <h2 className='mb-5 text-xl font-semibold ml-[2px]'>All Your Passwords</h2>}
-
-          <div className="flex flex-wrap gap-4">
-            {userPasses.map((pass, i) => (
-              <div
-                key={i}
-                className="border border-gray-500 text-black w-80 p-6 rounded-lg bg-yellow-300 backdrop-blur-lg"
-              >
-                <div className="flex flex-col justify-center items-center gap-2">
-                  <span><span>{decryptData(pass.site)}</span></span>
-                  <span><span>{decryptData(pass.username)}</span></span>
-                  <span>
-                    
-                    <input
-                      type="password"
-                      ref={(el) => (inputRefs.current[i] = el)}
-                      value={decryptData(pass.password)}
-                      readOnly
-                      className="w-full bg-transparent border-none outline-none indent-1 text-center"
-                    />
-
-
-                  </span>
-                </div>
-                <div className="password-action-btns flex gap-3 mt-3 justify-center">
-                  <button
-                    className="bg-indigo-00 text-black text-lg px-1 py-1  rounded-lg relative group"
-                    onClick={() => passViewRefHandler(i)}
-                  >
-                    <FaRegEye />
-                    <span className="absolute bottom-full left-1/2 transform -translate-x-1/2 mb- text-xs bg-gray-700 text-white py-1 px-2 rounded hidden group-hover:block transition-all duration-300">
-                      View
-                    </span>
-                  </button>
-                  <button
-                    className="text-lg px-1  text-black rounded-md relative group"
-                    onClick={() => editPassword(pass.id)}
-                  >
-                    <RiEdit2Line />
-                    <span className="absolute bottom-full left-1/2 transform -translate-x-1/2 mb- text-xs bg-gray-700 text-white py-1 px-2 rounded hidden group-hover:block transition-all duration-300">
-                      Edit
-                    </span>
-                  </button>
-                  <button
-                    className="text-lg  px-1  text-black rounded-md relative group"
-                    onClick={() => deletePass(pass.id)}
-                  >
-                    <AiOutlineDelete />
-                    <span className="absolute bottom-full left-1/2 transform -translate-x-1/2 mb- text-xs bg-gray-700 text-white py-1 px-2 rounded hidden group-hover:block transition-all duration-300">
-                      Delete
-                    </span>
-                  </button>
-                    <button
-                      className="relative group p-1 text-blue-600 text-xl"
-                      onClick={() => copyPassword(i)}
-                    >
-                      <IoMdCopy />
-                      {/* Tooltip */}
-                      <span className="absolute bottom-full left-1/2 transform -translate-x-1/2 mb-1 text-xs bg-gray-700 text-white py-1 px-2 rounded hidden group-hover:block transition-all duration-300">
-                        Copy
-                      </span>
-                    </button>
-                </div>
-              </div>
-            ))}
-          </div>
-        </div>
+      <AllPasswords setPassToEdit={setPassToEdit} setShowEditModal={setShowEditModal} />
 
         {
           showEditModal &&

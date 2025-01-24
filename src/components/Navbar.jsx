@@ -6,7 +6,7 @@ import { CgProfile } from 'react-icons/cg';
 const Navbar = () => {
 
   const [navToggle, setNavToggle] = useState(false);
-  const [profileView,setProfileView] = useState(false);
+  const [profileView, setProfileView] = useState(false);
 
   const navRef = useRef();
   const { user, setUser } = useUserContext();
@@ -38,33 +38,38 @@ const Navbar = () => {
           >
             Home
           </NavLink>
-          <a
-            className="hover:text-yellow-400"
-            href="#features"
+          {user ?
+            <NavLink to='/passwords'>
+              My Passwords
+            </NavLink>
+            :
+            <a
+              className="hover:text-yellow-400"
+              href="#features"
 
-          >
-            Features
-          </a>
+            >
+              Features
+            </a>}
           {
             user ?
-              <CgProfile className='text-2xl cursor-pointer' onClick={()=>{setProfileView(!profileView)}} />
+              <CgProfile className='text-2xl cursor-pointer' onClick={() => { setProfileView(!profileView) }} />
               :
               <NavLink
                 className="hover:text-yellow-400"
-                to="managers"
+                to="/managers"
 
               >
                 Get Started
               </NavLink>
           }
           {
-            profileView && 
+            profileView &&
             <div className='p-3 bg-  absolute right-8 top-14 z-50'>
-                <button className='px-4 py-1.5 bg-transparent border font-semibold rounded-md text-sm hover:bg-blue-600 transition-colors'
-                  onClick={handleLogout}
-                >
-                  Logout
-                </button>
+              <button className='px-4 py-1.5 bg-transparent border font-semibold rounded-md text-sm hover:bg-blue-600 transition-colors'
+                onClick={handleLogout}
+              >
+                Logout
+              </button>
             </div>
           }
         </div>
