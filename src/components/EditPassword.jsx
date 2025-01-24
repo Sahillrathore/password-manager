@@ -220,18 +220,3 @@ const EditPassword = ({ user, passToEdit, setShowEditModal }) => {
 }
 
 export default EditPassword;
-
-
-<div className="flex items-center justify-center min-h-screen bg-gray-100">
-    <div className="bg-gradient-to-r from-purple-600 to-purple-800 text-white rounded-xl p-6 w-80 shadow-lg relative">
-        {/* Circular elements for background */}
-        <div className="absolute -top-8 -left-8 h-24 w-24 bg-purple-400 rounded-full opacity-20"></div>
-        <div className="absolute -top-4 right-0 h-16 w-16 bg-pink-500 rounded-full opacity-80"></div>
-        <div className="absolute bottom-0 left-10 h-32 w-32 bg-purple-400 rounded-full opacity-30"></div>
-
-        {/* Card Content */}
-        <h1 className="text-lg font-semibold mb-2">Hey, Sandro</h1>
-        <p className="text-sm text-gray-300">Balance</p>
-        <p className="text-2xl font-bold mt-1">$23,540.00</p>
-    </div>
-</div>
