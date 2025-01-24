@@ -4,6 +4,7 @@ import Passmanager from './pages/Passmanager'
 import Homepage from './components/Homepage'
 import SignUp from './pages/Signup'
 import ProtectedRoute from './components/ProtectedRoute'
+import MyPasswords from './pages/MyPasswords'
 
 const App = () => {
   return (
@@ -12,6 +13,7 @@ const App = () => {
         <Routes>
           <Route path='/' element={<Homepage/>} />
           <Route path='/managers' element={<ProtectedRoute> <Passmanager /> </ProtectedRoute>} />
+          <Route path='/passwords' element={<MyPasswords />} />
           <Route path='/signup' element={<SignUp />} />
         </Routes>
       </BrowserRouter>
