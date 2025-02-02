@@ -5,8 +5,19 @@ import Homepage from './components/Homepage'
 import SignUp from './pages/Signup'
 import ProtectedRoute from './components/ProtectedRoute'
 import MyPasswords from './pages/MyPasswords'
+import { useUserContext } from './context/userContex'
 
 const App = () => {
+
+  const {user} = useUserContext();
+  
+  if(user) {
+    console.log('Welcome, ',user.email);
+  } else{
+    console.log('Please Login');
+    
+  }
+  
   return (
     <div>
       <BrowserRouter>

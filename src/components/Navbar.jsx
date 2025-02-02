@@ -39,8 +39,10 @@ const Navbar = () => {
             Home
           </NavLink>
           {user ?
-            <NavLink to='/passwords'>
-              My Passwords
+            <NavLink to='/managers'
+              className="hover:text-yellow-400"
+            >
+              Manager
             </NavLink>
             :
             <a
@@ -64,8 +66,8 @@ const Navbar = () => {
           }
           {
             profileView &&
-            <div className='p-3 bg-  absolute right-8 top-14 z-50'>
-              <button className='px-4 py-1.5 bg-transparent border font-semibold rounded-md text-sm hover:bg-blue-600 transition-colors'
+            <div className='p-2 bg-  absolute right-16 top-14 z-50 bg-gray-50 border rounded-md'>
+              <button className='px-4 py-1.5 bg-transparent font-semibold rounded-md text-sm !bg-blue-600 hover:bg-blue-500 transition-colors'
                 onClick={handleLogout}
               >
                 Logout
