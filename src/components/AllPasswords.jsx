@@ -13,7 +13,7 @@ const AllPasswords = ({ setShowEditModal , setPassToEdit}) => {
 
     const { user } = useUserContext();
     const inputRefs = useRef([]);
-    console.log(user);
+    // console.log(user);
 
     const [loading, setLoading] = useState(false);
     const [userPasses, setUserPasses] = useState([]);
@@ -98,7 +98,7 @@ const AllPasswords = ({ setShowEditModal , setPassToEdit}) => {
             console.error("User UID is required to retrieve passwords.");
             return;
         }
-        console.log('sahil');
+        // console.log('sahil');
         
 
         // Reference to the user's subcollection
@@ -113,7 +113,7 @@ const AllPasswords = ({ setShowEditModal , setPassToEdit}) => {
                     ...doc.data(),
                 }));
                 setUserPasses(passwords);
-                console.log(userPasses,);
+                // console.log(userPasses,);
 
                 setLoading(false);
             },
@@ -149,8 +149,8 @@ const AllPasswords = ({ setShowEditModal , setPassToEdit}) => {
                             <div className="bg-gradient-to-r from-purple-600 overflow-hidden to-purple-800 text-white rounded-xl p-6 w-80 shadow-lg  relative">
                                 {/* Circular elements for background */}
                                 <div className="absolute -top-8 -left-8 h-24 w-24 bg-purple-400 rounded-full opacity-20"></div>
-                                <div className={`absolute -top-4 -right-1 h-16 w-16 bg-pink-400 rounded-full opacity-80`}></div>
-                                <div className="absolute bottom-0 left-10 h-32 w-32 bg-purple-400 rounded-full opacity-30"></div>
+                                <div className={`absolute -top-4 -right-1 h-16 w-16 bg-purple-300/20 rounded-full opacity-80`}></div>
+                                <div className="absolute -bottom-6 left-10 h-32 w-32 bg-purple-400 rounded-full opacity-30"></div>
 
                                 {/* Card Content */}
                                 <h1 className="text-xl font-black text-white mb-1">{decryptData(pass?.site)}</h1>
