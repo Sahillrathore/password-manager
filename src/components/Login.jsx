@@ -29,10 +29,27 @@ const Login = ({ authMethod, setAuthMethod }) => {
             setUser(userCredential?.user);
             console.log(user);
             navigate('/')
-        } catch (err) {
-            setError(err.message);
-            console.log(err.message);
-            
+        } catch (error) {
+            switch (error.code) {
+                case "auth/email-already-in-use":
+                    setError("Email already in use");
+                    break;
+                case "auth/invalid-email":
+                    setError("Invalid email format");
+                    break;
+                case "auth/weak-password":
+                    setError("Password should be at least 6 characters");
+                    break;
+                case "auth/network-request-failed":
+                    setError("Network error. Check your connection.");
+                    break;
+                case "auth/invalid-credential":
+                    setError("Invalid Email or Password.");
+                    break;
+                default:
+                    setError("An unknown error occurred");
+            }
+            console.error("Firebase Auth Error:", error.message);
         }
     };
 
@@ -41,6 +58,9 @@ const Login = ({ authMethod, setAuthMethod }) => {
         <div className="w-full md:w-1/2 p-8 min-h-[595px] max-h-[595px] ">
             <h2 className="text-3xl font-bold text-gray-800 mb-3">Log in</h2>
             <p className="text-gray-500 mb-6 text-sm">Login to your account in seconds</p>
+
+            {error && <p className='text-sm text-red-500'>{error}</p>}
+            
             <form className="flex flex-col gap-3 mt-2">
 
                 <div className="mb-4">

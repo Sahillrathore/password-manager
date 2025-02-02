@@ -1,14 +1,18 @@
 import React, { useState } from "react";
 import Login from "../components/Login";
-import { createUserWithEmailAndPassword } from "firebase/auth";
-import { auth } from "../firebase";
+import { createUserWithEmailAndPassword, updateProfile } from "firebase/auth";
+import { auth, db } from "../firebase";
 import { useUserContext } from "../context/userContex";
 import { RxCross1 } from "react-icons/rx";
 import { useNavigate } from "react-router-dom";
+import { doc, setDoc } from "firebase/firestore";
 
 const SignUp = () => {
 
     const { user, setUser } = useUserContext();
+
+    console.log(user);
+    
     const [authMethod, setAuthMethod] = useState('signup');
     const [formData, setFormData] = useState({
         name: '',
@@ -35,11 +39,27 @@ const SignUp = () => {
 
         try {
             const userCredential = await createUserWithEmailAndPassword(auth, formData.email, formData.password);
-            console.log("User created:", userCredential.user);
+            const user = userCredential.user;
+
+            await updateProfile(user, {
+                displayName: formData.displayName || "", // Set the provided display name
+            });
+            
+            console.log("User created:", user);
+
+            // Store user info in Firestore
+            await setDoc(doc(db, "users", user.uid), {
+                uid: user.uid,
+                email: user.email,
+                createdAt: new Date(),
+                name: formData.name || "",
+                // phoneNumber: formData.phoneNumber || "",
+            });
+
             setSuccess(true);
-            setUser(userCredential?.user);
+            setUser(user);
             setError(null);
-            navigate('/')
+            navigate('/');
         } catch (error) {
             switch (error.code) {
                 case "auth/email-already-in-use":
@@ -89,6 +109,7 @@ const SignUp = () => {
                                         onChange={handleChange}
                                         className="w-full px-4 py-2 border border-gray-300 rounded-md focus:ring-2 focus:ring-purple-500 focus:outline-none"
                                         placeholder="Enter your name"
+                                        required
                                     />
                                 </div>
 
@@ -104,6 +125,7 @@ const SignUp = () => {
                                         onChange={handleChange}
                                         className="w-full px-4 py-2 border border-gray-300 rounded-md focus:ring-2 focus:ring-purple-500 focus:outline-none"
                                         placeholder="Enter your email"
+                                        required
                                     />
                                 </div>
                                 <div className="mb-4">
@@ -118,6 +140,7 @@ const SignUp = () => {
                                         onChange={handleChange}
                                         className="w-full px-4 py-2 border border-gray-300 rounded-md focus:ring-2 focus:ring-purple-500 focus:outline-none"
                                         placeholder="Enter your password"
+                                        required
                                     />
                                 </div>
 
