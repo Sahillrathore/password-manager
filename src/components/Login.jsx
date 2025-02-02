@@ -28,7 +28,7 @@ const Login = ({ authMethod, setAuthMethod }) => {
             const userCredential = await signInWithEmailAndPassword(auth, formData.email, formData.password);
             setUser(userCredential?.user);
             console.log(user);
-            navigate('/managers')
+            navigate('/')
         } catch (err) {
             setError(err.message);
             console.log(err.message);

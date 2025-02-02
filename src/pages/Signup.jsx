@@ -1,13 +1,14 @@
 import React, { useState } from "react";
-import Login from "../components/Login"; 
+import Login from "../components/Login";
 import { createUserWithEmailAndPassword } from "firebase/auth";
 import { auth } from "../firebase";
 import { useUserContext } from "../context/userContex";
 import { RxCross1 } from "react-icons/rx";
+import { useNavigate } from "react-router-dom";
 
 const SignUp = () => {
 
-    const {user, setUser} = useUserContext();
+    const { user, setUser } = useUserContext();
     const [authMethod, setAuthMethod] = useState('signup');
     const [formData, setFormData] = useState({
         name: '',
@@ -16,6 +17,8 @@ const SignUp = () => {
     });
     const [error, setError] = useState(null);
     const [success, setSuccess] = useState(false);
+
+    const navigate = useNavigate();
 
     const handleChange = (e) => {
         const { name, value } = e.target;
@@ -35,12 +38,29 @@ const SignUp = () => {
             console.log("User created:", userCredential.user);
             setSuccess(true);
             setUser(userCredential?.user);
-        } catch (err) {
-            setError(err.message);
-            console.log(err.message);
-            
+            setError(null);
+            navigate('/')
+        } catch (error) {
+            switch (error.code) {
+                case "auth/email-already-in-use":
+                    setError("Email already in use");
+                    break;
+                case "auth/invalid-email":
+                    setError("Invalid email format");
+                    break;
+                case "auth/weak-password":
+                    setError("Password should be at least 6 characters");
+                    break;
+                case "auth/network-request-failed":
+                    setError("Network error. Check your connection.");
+                    break;
+                default:
+                    setError("An unknown error occurred");
+            }
+            console.error("Firebase Auth Error:", error.message);
         }
     };
+
     return (
         <div className="min-h-screen flex items-center justify-center bg-gray-100">
             {/* <RxCross1 className="absolute top-12 right-12 cursor-pointer"/> */}
@@ -55,6 +75,7 @@ const SignUp = () => {
                         <div className="w-full md:w-1/2 p-8 min-h-[595px] max-h-[595px]">
                             <h2 className="text-3xl font-bold text-gray-800 mb-3">Sign in</h2>
                             <p className="text-gray-500 mb-6 text-sm">Create your account in a seconds</p>
+                            {error && <p className="text-sm text-red-400">{error}</p>}
                             <form className="flex flex-col gap-3 mt-2">
                                 <div className="mb-4">
                                     <label className="block text-gray-700 text-sm font-bold mb-2" htmlFor="firstName">
