@@ -19,15 +19,15 @@ const App = () => {
   }
   
   return (
-    <div>
-      <BrowserRouter>
-        <Routes>
-          <Route path='/' element={<Homepage/>} />
-          <Route path='/managers' element={<ProtectedRoute> <Passmanager /> </ProtectedRoute>} />
-          <Route path='/passwords' element={<MyPasswords />} />
-          <Route path='/signup' element={<SignUp />} />
-        </Routes>
-      </BrowserRouter>
+      <div>
+        <BrowserRouter>
+          <Routes>
+            <Route path='/' element={<Homepage/>} />
+            <Route path='/managers' element={<ProtectedRoute> <Passmanager /> </ProtectedRoute>} />
+            <Route path='/passwords' element={<MyPasswords />} />
+            <Route path='/signup' element={<SignUp />} />
+          </Routes>
+        </BrowserRouter>
     </div>
   )
 }
