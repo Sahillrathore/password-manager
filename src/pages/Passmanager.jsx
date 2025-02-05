@@ -12,6 +12,7 @@ import { FaRegEye } from 'react-icons/fa';
 import { RiEdit2Line } from 'react-icons/ri';
 import { IoMdCopy } from 'react-icons/io';
 import AllPasswords from '../components/AllPasswords';
+import { toast, ToastContainer } from 'react-toastify';
 
 const Passmanager = () => {
 
@@ -146,6 +147,7 @@ const Passmanager = () => {
     try {
       // Validate credentials
       if (!credentials.password || !credentials.site || !credentials.username) {
+        toast.error('All Fields Are Mandatory!')
         console.error("All fields (site, username, password) are required.");
         return;
       }
@@ -218,6 +220,7 @@ const Passmanager = () => {
     <>
       <Navbar />
       <div className='py-4 px-6 w-full overflow-hidden relative'>
+        <ToastContainer autoClose={1200}/>
         <h2 className='font-bold text-3xl underline text-[#16379a] text-center'>SecureVault</h2>
 
         <div className="pass-form  backdrop-blur-xl p-2 flex justify-center flex-col items-center">
