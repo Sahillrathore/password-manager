@@ -2,6 +2,7 @@ import React, { useRef, useState } from 'react'
 import { Link, NavLink } from 'react-router-dom'
 import { useUserContext } from '../context/userContex';
 import { CgProfile } from 'react-icons/cg';
+import { collection } from 'firebase/firestore';
 
 const Navbar = () => {
 
@@ -21,6 +22,10 @@ const Navbar = () => {
   const handleLogout = () => {
     setUser(null);
     setProfileView(!profileView);
+  }
+
+  const fetchUserData = () => {
+    const user = collection('users', 'uid')
   }
 
   return (
