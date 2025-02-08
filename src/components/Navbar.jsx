@@ -1,8 +1,9 @@
-import React, { useRef, useState } from 'react'
+import React, { useEffect, useRef, useState } from 'react'
 import { Link, NavLink } from 'react-router-dom'
 import { useUserContext } from '../context/userContex';
 import { CgProfile } from 'react-icons/cg';
 import { collection } from 'firebase/firestore';
+import { db } from '../firebase';
 
 const Navbar = () => {
 
@@ -24,9 +25,15 @@ const Navbar = () => {
     setProfileView(!profileView);
   }
 
-  const fetchUserData = () => {
-    const userPasswordsCollection = collection(db, "passwords", uid, "userPasswords");
-  }
+  // const fetchUserData = () => {
+  //   const userData = collection(db, "users", user);
+  //   console.log(userData);
+    
+  // }
+
+  // useEffect(()=>{
+  //   fetchUserData();
+  // },[])
 
   return (
     <nav className='bg-[#16379a] z-20 top-0  flex'>
