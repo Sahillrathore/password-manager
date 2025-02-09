@@ -136,6 +136,9 @@ const Login = ({ authMethod, setAuthMethod }) => {
 
                     :
                     <form onSubmit={handleSubmit} className="flex justify-center gap-4 flex-col w-full md:w-1/2 p-8 min-h-[595px] max-h-[595px] ">
+
+                        <h2 className="text-3xl font-bold text-gray-800 mb-3">Reset your password here</h2>
+                        
                         <input
                             type="email"
                             placeholder="Enter your email"
@@ -144,9 +147,13 @@ const Login = ({ authMethod, setAuthMethod }) => {
                             required
                             className="border p-2"
                         />
-                        <button type="submit" className="bg-blue-500 text-white p-2 ">
+                        <button type="submit" className="bg-purple-600  text-white p-2 ">
                             Reset Password
                         </button>
+                        
+                        <a href="#" onClick={()=> setPassReset(!passReset)} className='underline text-gray-600 text-sm -mt-2'>
+                            back to login
+                        </a>
                     </form>
             }
         </>
