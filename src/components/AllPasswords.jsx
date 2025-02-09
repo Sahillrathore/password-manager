@@ -8,7 +8,7 @@ import CryptoJS, { enc } from 'crypto-js';
 import { doc, setDoc, collection, addDoc, getDocs, onSnapshot, deleteDoc } from "firebase/firestore";
 import { db } from "../firebase";
 
-const AllPasswords = ({ setShowEditModal , setPassToEdit}) => {
+const AllPasswords = ({ setShowEditModal, setPassToEdit }) => {
 
 
     const { user } = useUserContext();
@@ -99,7 +99,7 @@ const AllPasswords = ({ setShowEditModal , setPassToEdit}) => {
             return;
         }
         // console.log('sahil');
-        
+
 
         // Reference to the user's subcollection
         const userPasswordsCollection = collection(db, "passwords", uid, "userPasswords");
@@ -130,7 +130,11 @@ const AllPasswords = ({ setShowEditModal , setPassToEdit}) => {
     return (
         <div className="passwords-list py-8">
 
-            {userPasses.length === 0 ? <h2 className='mb-5 text-xl font-semibold ml-[2px]'>Your Passwords Will Appear Here</h2>
+            {userPasses.length === 0 ?
+                // <h2 className='mb-5 text-xl font-semibold ml-[2px]'>Your Passwords Will Appear Here</h2>
+                <div className='w-full mt-10'>
+                    <img src="/empty.jpg" className='w-[30rem] mx-auto rounded-lg' />
+                </div>
                 :
                 <div className='flex gap-5 items-center mb-5'>
                     <h2 className=' text-xl font-semibold ml-[2px]'>All Your Passwords</h2>
