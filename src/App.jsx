@@ -6,28 +6,30 @@ import SignUp from './pages/Signup'
 import ProtectedRoute from './components/ProtectedRoute'
 import MyPasswords from './pages/MyPasswords'
 import { useUserContext } from './context/userContex'
+import Pagenotfound from './pages/Pagenotfound'
 
 const App = () => {
 
-  const {user} = useUserContext();
-  
-  if(user) {
-    console.log('Welcome, ',user.email);
-  } else{
+  const { user } = useUserContext();
+
+  if (user) {
+    console.log('Welcome, ', user.email);
+  } else {
     console.log('Please Login');
-    
+
   }
-  
+
   return (
-      <div>
-        <BrowserRouter>
-          <Routes>
-            <Route path='/' element={<Homepage/>} />
-            <Route path='/managers' element={<ProtectedRoute> <Passmanager /> </ProtectedRoute>} />
-            <Route path='/passwords' element={<MyPasswords />} />
-            <Route path='/signup' element={<SignUp />} />
-          </Routes>
-        </BrowserRouter>
+    <div>
+      <BrowserRouter>
+        <Routes>
+          <Route path='/' element={<Homepage />} />
+          <Route path='/managers' element={<ProtectedRoute> <Passmanager /> </ProtectedRoute>} />
+          <Route path='/passwords' element={<MyPasswords />} />
+          <Route path='/signup' element={<SignUp />} />
+          <Route path='*' element={<Pagenotfound />} />
+        </Routes>
+      </BrowserRouter>
     </div>
   )
 }
