@@ -1,36 +1,28 @@
 import { createContext, useContext, useEffect, useState } from "react";
+import { auth } from "../firebase"; // Import Firebase auth
+import { onAuthStateChanged } from "firebase/auth";
 
-// Create the context
-const userContext = createContext();
+const UserContext = createContext();
 
-// Create the provider component
 export const UserContextProvider = ({ children }) => {
-    // Create state to manage the user
-    const [user, setUser] = useState(() => {
-        // Load the user from localStorage if it exists
-        const storedUser = localStorage.getItem("user");
-        return storedUser ? JSON.parse(storedUser) : null;
-    });
+    const [user, setUser] = useState(null);
+    const [loading, setLoading] = useState(true);
 
     useEffect(() => {
-        // Save the user to localStorage whenever it changes
-        if (user) {
-            localStorage.setItem("user", JSON.stringify(user));
-        } else {
-            localStorage.removeItem("user");
-        }
-    }, [user]);
+        // Listen for Firebase auth state changes
+        const unsubscribe = onAuthStateChanged(auth, (currentUser) => {
+            setUser(currentUser);
+            setLoading(false);
+        });
 
-    // Pass the state and updater function in the context value
-    const value = {
-        user,
-        setUser,
-    };
+        return () => unsubscribe(); // Cleanup on unmount
+    }, []);
 
-    return <userContext.Provider value={value}>{children}</userContext.Provider>;
+    return (
+        <UserContext.Provider value={{ user, setUser }}>
+            {!loading && children}
+        </UserContext.Provider>
+    );
 };
 
-// Custom hook to access the context
-export const useUserContext = () => {
-    return useContext(userContext);
-};
+export const useUserContext = () => useContext(UserContext);

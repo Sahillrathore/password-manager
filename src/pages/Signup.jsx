@@ -12,7 +12,7 @@ const SignUp = () => {
     const { user, setUser } = useUserContext();
 
     console.log(user);
-    
+
     const [authMethod, setAuthMethod] = useState('signup');
     const [formData, setFormData] = useState({
         name: '',
@@ -42,9 +42,9 @@ const SignUp = () => {
             const user = userCredential.user;
 
             await updateProfile(user, {
-                displayName: formData.displayName || "", // Set the provided display name
+                displayName: formData.displayName || "",
             });
-            
+
             console.log("User created:", user);
 
             // Store user info in Firestore
@@ -53,13 +53,13 @@ const SignUp = () => {
                 email: user.email,
                 createdAt: new Date(),
                 name: formData.name || "",
-                // phoneNumber: formData.phoneNumber || "",
             });
 
             setSuccess(true);
             setUser(user);
             setError(null);
             navigate('/');
+
         } catch (error) {
             switch (error.code) {
                 case "auth/email-already-in-use":
@@ -78,6 +78,10 @@ const SignUp = () => {
                     setError("An unknown error occurred");
             }
             console.error("Firebase Auth Error:", error.message);
+            // If Firestore fails, delete the partially created user
+            if (auth.currentUser) {
+                await auth.currentUser.delete();
+            }
         }
     };
 
