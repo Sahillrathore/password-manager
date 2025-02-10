@@ -36,17 +36,17 @@ const Navbar = () => {
   // },[])
 
   return (
-    <nav className='bg-[#16379a] z-20 top-0  flex'>
-      <div className="nav-container flex justify-between items-center sm:px-16 px-10 py-4 w-screen relative">
-        <div className="logo text-yellow-400 font-bold text-2xl">
+    <nav className='z-20 flex absolute top-6 w-full rounded-full'>
+      <div className="nav-container flex justify-between items-center sm:px-16 px-10 py-4 relative w-[92%] mx-auto bg-[#fff] rounded-full shadow-sm ">
+        <div className="logo text-[#4461b9] font-bold text-2xl">
           <Link to='/'>
             SecureVault
           </Link>
         </div>
 
-        <div className={`nav-links md:flex hidden list-none gap-6 items-center text-zinc-200`}>
+        <div className={`nav-links md:flex hidden list-none gap-6 items-center text-zinc-700`}>
           <NavLink
-            className="hover:text-yellow-400"
+            className="hover:text-[#16379a]"
             to="/"
 
           >
@@ -54,13 +54,13 @@ const Navbar = () => {
           </NavLink>
           {user ?
             <NavLink to='/managers'
-              className="hover:text-yellow-400"
+              className="hover:text-[#16379a]"
             >
               Manager
             </NavLink>
             :
             <a
-              className="hover:text-yellow-400"
+              className="hover:text-[#16379a]"
               href="#features"
 
             >
