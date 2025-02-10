@@ -1,5 +1,5 @@
 import React, { useEffect, useRef, useState } from 'react'
-import { Link, NavLink } from 'react-router-dom'
+import { Link, NavLink, useLocation } from 'react-router-dom'
 import { useUserContext } from '../context/userContex';
 import { CgProfile } from 'react-icons/cg';
 import { collection } from 'firebase/firestore';
@@ -14,6 +14,8 @@ const Navbar = () => {
   const { user, setUser } = useUserContext();
   // console.log(user.uid);
 
+  const location = useLocation();
+  const isHome = location.pathname === "/";
 
   const navHandler = () => {
     setNavToggle(!navToggle);
@@ -36,8 +38,8 @@ const Navbar = () => {
   // },[])
 
   return (
-    <nav className='z-20 flex absolute top-6 w-full rounded-full'>
-      <div className="nav-container flex justify-between items-center sm:px-16 px-10 py-4 relative w-[92%] mx-auto bg-[#fff] rounded-full shadow-sm ">
+    <nav className={`z-20 flex ${isHome ? 'top-4 absolute' : ''} w-full rounded-full`}>
+      <div className={`nav-container flex justify-between items-center sm:px-16 px-10 py-4 relative ${isHome ? 'w-[92%] rounded-full  shadow-sm' : 'w-full shadow-md'}  mx-auto bg-[#fff]`}>
         <div className="logo text-[#4461b9] font-bold text-2xl">
           <Link to='/'>
             SecureVault
