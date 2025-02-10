@@ -147,7 +147,7 @@ const Login = ({ authMethod, setAuthMethod }) => {
                             required
                             className="border p-2"
                         />
-                        <button type="submit" className="bg-purple-600  text-white p-2 ">
+                        <button type="submit" className="bg-purple-600 text-white p-2 ">
                             Reset Password
                         </button>
                         
