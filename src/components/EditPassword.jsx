@@ -4,12 +4,14 @@ import { useEffect, useState } from 'react';
 import CryptoJS, { enc } from 'crypto-js';
 import { RxCross1 } from 'react-icons/rx';
 import { toast, ToastContainer } from 'react-toastify';
+import { BsEye } from 'react-icons/bs';
 
 const EditPassword = ({ user, passToEdit, setShowEditModal }) => {
 
     const [error, setError] = useState('');
     const [newCredentials, setNewCredentials] = useState({});
     const [closing, setClosing] = useState(false);
+    const [showPass, setShowPass] = useState(false);
 
     const uid = user.uid;
 
@@ -193,16 +195,17 @@ const EditPassword = ({ user, passToEdit, setShowEditModal }) => {
                         />
                     </div>
 
-                    <div className="mb-4">
+                    <div className="mb-4 relative">
                         <label htmlFor="newPassword" className="block text-sm font-medium text-gray-700">Password</label>
                         <input
-                            type="text"
+                            type={showPass ? 'text' : 'password'}
                             name="password"
                             value={newCredentials?.password}
                             onChange={changeHandler}
                             className="mt-2 w-full px-4 py-2 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500"
                             required
                         />
+                        <BsEye className='absolute top-10 right-3 text-lg cursor-pointer' onClick={() => setShowPass(!showPass)} />
                     </div>
 
 
