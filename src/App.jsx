@@ -25,7 +25,7 @@ const App = () => {
         <Routes>
           <Route path='/' element={<Homepage />} />
           <Route path='/managers' element={<ProtectedRoute> <Passmanager /> </ProtectedRoute>} />
-          <Route path='/passwords' element={<MyPasswords />} />
+          {/* <Route path='/passwords' element={<MyPasswords />} /> */}
           <Route path='/signup' element={<SignUp />} />
           <Route path='*' element={<Pagenotfound />} />
         </Routes>

@@ -24,7 +24,7 @@ const FeaturesHome = () => {
     ]
 
     return (
-        <div className="bg-[#16379a] p-12 rounded-2xl text-white mx-12 px-16 my-16">
+        <div id="features" className="bg-[#16379a] p-12 rounded-2xl text-white mx-12 px-16 my-16">
             <h2 className="text-3xl font-semibold text-center mb-6">
                 Security and productivity wrapped into one
             </h2>
@@ -33,7 +33,7 @@ const FeaturesHome = () => {
                 {
                     data.map((item, i) => (
 
-                        < div className="bg-[#2c51ba] hover:bg-[#2b4da9] transition-colors p-6 rounded-3xl shadow-lg text-start flex flex-col gap-5 " >
+                        < div className="bg-[#2c51ba] hover:bg-[#2b4da9] transition-colors p-6 rounded-3xl shadow-lg text-start flex flex-col gap-5 " key={i}>
                             <h3 className="text-2xl font-medium mb-4">{item?.title}</h3>
                             <img
                                 src={item?.img}

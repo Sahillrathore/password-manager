@@ -3,7 +3,8 @@ import { Link, NavLink, useLocation } from 'react-router-dom'
 import { useUserContext } from '../context/userContex';
 import { CgProfile } from 'react-icons/cg';
 import { collection } from 'firebase/firestore';
-import { db } from '../firebase';
+import { auth, db } from '../firebase';
+import { signOut } from 'firebase/auth';
 
 const Navbar = () => {
 
@@ -22,10 +23,16 @@ const Navbar = () => {
     navRef.current.classList.toggle("translate-x-12")
   }
 
-  const handleLogout = () => {
-    setUser(null);
-    setProfileView(!profileView);
-  }
+
+  const handleLogout = async () => {
+    try {
+      await signOut(auth); // Logs out from Firebase
+      setUser(null);
+      setProfileView(!profileView);
+    } catch (error) {
+      console.error("Error logging out:", error);
+    }
+  };
 
   // const fetchUserData = () => {
   //   const userData = collection(db, "users", user);
@@ -39,7 +46,7 @@ const Navbar = () => {
 
   return (
     <nav className={`z-20 flex ${isHome ? 'top-4 absolute' : ''} w-full rounded-full`}>
-      <div className={`nav-container flex justify-between items-center sm:px-16 px-10 py-4 relative ${isHome ? 'w-[92%] rounded-full  shadow-sm' : 'w-full shadow-md'}  mx-auto bg-[#fff]`}>
+      <div className={`nav-container flex justify-between items-center sm:px-10 px-10 py-4 relative ${isHome ? 'w-[92%] rounded-full  shadow-sm' : 'w-full shadow-md'}  mx-auto bg-[#fff]`}>
         <div className="logo text-[#4461b9] font-bold text-2xl">
           <Link to='/'>
             SecureVault
@@ -73,7 +80,7 @@ const Navbar = () => {
               <CgProfile className='text-2xl cursor-pointer' onClick={() => { setProfileView(!profileView) }} />
               :
               <NavLink
-                className="hover:text-yellow-400"
+                className="hover:text-[#16379a]"
                 to="/managers"
 
               >

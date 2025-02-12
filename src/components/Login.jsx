@@ -113,7 +113,7 @@ const Login = ({ authMethod, setAuthMethod }) => {
                             <div className='-mt-5 text-sm text-gray-700 pl-0.5'
                             onClick={()=>setPassReset(!passReset)}
                             >
-                                <button className='underline'>Forgot Password</button>
+                                <a href='#' className='underline'>Forgot Password</a>
                             </div>
 
                             <button
