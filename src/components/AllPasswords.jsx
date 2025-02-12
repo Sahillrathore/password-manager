@@ -138,7 +138,7 @@ const AllPasswords = ({ setShowEditModal, setPassToEdit }) => {
                 :
                 <div className='flex gap-5 items-center mb-5'>
                     <h2 className=' text-xl font-semibold ml-[2px]'>All Your Passwords</h2>
-                    <input type="text" placeholder='Search' className='rounded-full w-44 border border-gray-300 text-gray-700 focus:outline-none bg-white pl-2 py-1 text-sm'
+                    <input type="text" placeholder='Search' className='rounded-full w-48 border border-gray-400 text-gray-700 focus:outline-none bg-white pl-3 py-1 text-sm'
                         onChange={(e) => { setSearchQuery(e.target.value) }}
                     />
                 </div>}

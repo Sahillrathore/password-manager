@@ -82,8 +82,11 @@ const Navbar = () => {
           }
           {
             profileView &&
-            <div className='p-2 bg-  absolute right-16 top-14 z-50 bg-gray-50 border rounded-md'>
-              <button className='px-4 py-1.5 bg-transparent font-semibold rounded-md text-sm !bg-blue-600 hover:bg-blue-500 transition-colors'
+            <div className='p-3 bg-  absolute right-16 top-16 z-50 bg-white border rounded-md'>
+              
+              <p className='text-sm pb-1 border-b border-gray-300'>{user?.email}</p>
+              
+              <button className='px-4 mt-2 py-1.5 bg-transparent text-white font-semibold rounded-md text-sm !bg-blue-600 hover:bg-blue-500 transition-colors'
                 onClick={handleLogout}
               >
                 Logout

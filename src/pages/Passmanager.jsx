@@ -219,7 +219,7 @@ const Passmanager = () => {
   return (
     <>
       <Navbar />
-      <div className='py-4 px-6 w-full overflow-hidden relative'>
+      <div className='py-4 px-12 w-full overflow-hidden relative '>
         <ToastContainer autoClose={1200}/>
         <h2 className='font-bold text-3xl underline text-[#16379a] text-center'>SecureVault</h2>
 
