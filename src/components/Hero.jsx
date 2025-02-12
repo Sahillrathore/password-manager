@@ -63,7 +63,7 @@ const Hero = () => {
           <h2 className='text-2xl mt-10 ml-1 text-gray-700'>We make that easy at <span className='text-[#2c51ba]'>Securevault</span></h2>
         </div>
 
-        <div className="sm:h-72 h-64 sm:w-40 w-[9.5rem] rounded-2xl bg-white px-2 py-4 border border-gray-400 mt-0">
+        {/* <div className="sm:h-72 h-64 sm:w-40 w-[9.5rem] rounded-2xl bg-white px-2 py-4 border border-gray-400 mt-0">
           <div className='bg-gray-100 h-full w-full rounded-sm border border-gray-400 relative'>
 
             <h3 className='sm:text-xs text-[10px] bg-yellow-400 text-black py-2 text-center font-semibold'>Safe, Sound and Secure</h3>
@@ -85,7 +85,9 @@ const Hero = () => {
               <i className="fa-solid fa-bars"></i>
             </div>
           </div>
-        </div>
+        </div> */}
+
+        <img src="/hero.jpg" alt="" className='w-[32rem]' />
 
       </div>
     </div>
