@@ -12,12 +12,12 @@ const ProtectedRoute = ({ children }) => {
   
   useEffect(()=> {
     if (!user) {
-      navigate("/signup")
+      navigate("/signup", {replace: true})
     }
 
   },[user])
   return (
-    children
+    user ? children : null
   )
 }
 

@@ -11,7 +11,7 @@ const SignUp = () => {
 
     const { user, setUser } = useUserContext();
 
-    console.log(user);
+    // console.log(user);
 
     const [authMethod, setAuthMethod] = useState('signup');
     const [formData, setFormData] = useState({
