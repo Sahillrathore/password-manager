@@ -158,13 +158,13 @@ const AllPasswords = ({ setShowEditModal, setPassToEdit }) => {
 
                                 {/* Card Content */}
                                 <h1 className="text-xl font-black text-white mb-1">{decryptData(pass?.site)}</h1>
-                                <p className="text-base font-bold text-white mb-1">{decryptData(pass?.username)}</p>
+                                <p className="text-base font-bold text-white mb-1 relative z-30">{decryptData(pass?.username)}</p>
                                 <input
                                     type="password"
                                     ref={(el) => (inputRefs.current[i] = el)}
                                     value={decryptData(pass.password)}
                                     readOnly
-                                    className="w-full bg-transparent border-none outline-none text-start"
+                                    className="w-full bg-transparent border-none outline-none text-start relative z-10"
                                 />
                                 <div className="password-action-btns flex gap-3 mt-3 justify-">
                                     <button
