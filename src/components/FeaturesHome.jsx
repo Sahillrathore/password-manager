@@ -5,19 +5,19 @@ const FeaturesHome = () => {
     const data = [
         {
             title: 'Secure every sign-in',
-            img: 'https://images.ctfassets.net/2h488pz7kgfv/2jFChGmo2BQ9RY6OvLSrSk/fe7fb7da037c4632064ccb112ec6834b/universal-sign-in-spot-illustration-682x384.webp',
+            img: 'https://a.storyblok.com/f/157611/200x156/f37dc60067/stikies-shiled-key-check.png/m/828x0/filters:quality(60):format(avif)',
             desc: 'Store all sign-ins in secure vaults, with the ability to securely share passwords, secrets, and more.',
             link: 'see features',
         },
         {
             title: 'Generate Strong Passwords',
-            img: 'https://images.ctfassets.net/2h488pz7kgfv/2jFChGmo2BQ9RY6OvLSrSk/fe7fb7da037c4632064ccb112ec6834b/universal-sign-in-spot-illustration-682x384.webp',
+            img: 'https://a.storyblok.com/f/157611/200x156/f4e5193d7f/stikies-lock-organize.png/m/828x0/filters:quality(60):format(avif)',
             desc: 'Our built-in password generator creates strong, unique passwords with a single click, ensuring your online accounts remain secure.',
             link: 'see features'
         },
         {
             title: 'Access Anywhere Securely',
-            img: 'https://images.ctfassets.net/2h488pz7kgfv/2jFChGmo2BQ9RY6OvLSrSk/fe7fb7da037c4632064ccb112ec6834b/universal-sign-in-spot-illustration-682x384.webp',
+            img: 'https://a.storyblok.com/f/157611/200x156/f37dc60067/stikies-shiled-key-check.png/m/828x0/filters:quality(60):format(avif)',
             desc: 'Enjoy seamless, end-to-end encrypted synchronization across all your devices. Your vault is always within reach.',
             link: 'see features'
         }
@@ -39,7 +39,7 @@ const FeaturesHome = () => {
                             <img
                                 src={item?.img}
                                 alt="Secure sign-in"
-                                className="mx-auto mb-4 w-80"
+                                className="mx-auto mb-4 w-60"
                             />
                             <p className="text-xl text-gray-300 mt-5">
                                 {item?.desc}
