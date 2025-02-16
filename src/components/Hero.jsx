@@ -58,7 +58,7 @@ const Hero = () => {
 
       <div className='min-h-[95vh] md:p-12 p-20 z-40 relative h-full flex md:flex-row flex-col gap-0 md:justify-start justify-center items-center md:px-20 px-10'>
         
-        <div className='sm:mt-0 mt-10 text-center'>
+        <div className='sm:mt-0 mt-10 md:text-start text-center'>
           <h1 className='md:text-7xl text-4xl font-medium sm:w-[70%] mt-0 font-sans text-[#2c51ba]'>Remembering passwords can be confusing</h1>
           <h2 className='md:text-2xl text-xl md:mt-10 mt-6 ml-1 text-gray-700'>We make that easy at <span className='text-[#2c51ba]'>Securevault</span></h2>
         </div>
