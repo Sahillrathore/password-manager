@@ -219,8 +219,8 @@ const Passmanager = () => {
   return (
     <>
       <Navbar />
-      <div className='py-4 px-12 w-full overflow-hidden relative '>
-        <ToastContainer autoClose={1200}/>
+      <div className='py-4 md:px-12 px-6 w-full overflow-hidden relative '>
+        <ToastContainer autoClose={1200} />
         <h2 className='font-bold text-3xl underline text-[#16379a] text-center'>SecureVault</h2>
 
         <div className="pass-form  backdrop-blur-xl p-2 flex justify-center flex-col items-center">
@@ -274,7 +274,7 @@ const Passmanager = () => {
           </button>
         </div>
 
-      <AllPasswords setPassToEdit={setPassToEdit} setShowEditModal={setShowEditModal} />
+        <AllPasswords setPassToEdit={setPassToEdit} setShowEditModal={setShowEditModal} />
 
         {
           showEditModal &&

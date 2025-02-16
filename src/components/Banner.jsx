@@ -3,8 +3,8 @@ import { NavLink } from 'react-router-dom'
 
 const Banner = () => {
   return (
-    <section className='h-fit py-10 mx-12 rounded-3xl bg-[#16379a] my-6 flex md:flex-row flex-col-reverse md:items-center items-start md:gap-12 gap-7 justify-between sm:px-16 px-12'> 
-        <div className='text-white flex flex-col md:gap-5 gap-3'>
+    <section className='h-fit py-10 md:mx-12 mx-4 rounded-3xl bg-[#16379a] my-6 flex md:flex-row flex-col-reverse md:items-center items-center md:gap-12 gap-7 justify-between sm:px-16 px-8'> 
+        <div className='text-white flex md:items-start items-center md:text-start text-center flex-col md:gap-5 gap-3'>
             <h4 className='text-2xl font-mono '>Best Personal Password Manager</h4>
             <p className=''>Securely storing and managing sensitive passwords online</p>
             <NavLink

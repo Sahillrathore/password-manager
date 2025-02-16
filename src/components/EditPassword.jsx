@@ -162,7 +162,7 @@ const EditPassword = ({ user, passToEdit, setShowEditModal }) => {
     return (
         <div className="rounded-lg h-full w-full absolute flex items-center justify-center top-0 z-50">
             <ToastContainer autoClose={1000} />
-            <div className={`bg-white border p-5 rounded-lg w-[30rem] -ml-16 drop-animation ${closing ? "modal-close" : "modal-open"}`}>
+            <div className={`bg-white border-gray-300 border p-5 rounded-lg md:w-[30rem] w-[90%] sm:-ml-16 -ml-12 drop-animation ${closing ? "modal-close" : "modal-open"}`}>
 
                 <RxCross1 className='float-right cursor-pointer ' onClick={() => { setShowEditModal(false) }} />
 
