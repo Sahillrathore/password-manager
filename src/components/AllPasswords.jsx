@@ -136,9 +136,9 @@ const AllPasswords = ({ setShowEditModal, setPassToEdit }) => {
                     <img src="/empty.jpg" className='w-[30rem] mx-auto rounded-lg' />
                 </div>
                 :
-                <div className='flex gap-5 items-center mb-5'>
-                    <h2 className=' text-xl font-semibold ml-[2px]'>All Your Passwords</h2>
-                    <input type="text" placeholder='Search' className='rounded-full w-48 border border-gray-400 text-gray-700 focus:outline-none bg-white pl-3 py-1 text-sm'
+                <div className='flex gap-5 items- mb-5 md:flex-row flex-col'>
+                    <h2 className=' text-xl font-semibold ml-[2px] text-start'>All Your Passwords</h2>
+                    <input type="text" placeholder='Search' className='rounded-full sm:w-48 w-full border border-gray-400 text-gray-700 focus:outline-none bg-white pl-3 py-1 text-sm'
                         onChange={(e) => { setSearchQuery(e.target.value) }}
                     />
                 </div>}
