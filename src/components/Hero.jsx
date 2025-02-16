@@ -56,11 +56,11 @@ const Hero = () => {
       </div>
       <div className='absolute bg-[#CBDAFA] rounded-full h-[68rem] w-[68rem] blur-3xl -top-96 -left-48 z-0'></div>
 
-      <div className='min-h-[95vh] p-12 z-40 relative h-full flex gap-0 items-center px-20'>
+      <div className='min-h-[95vh] md:p-12 p-20 z-40 relative h-full flex md:flex-row flex-col gap-0 md:justify-start justify-center items-center md:px-20 px-10'>
         
-        <div >
-          <h1 className='text-7xl font-medium w-[70%] mt-0 font-sans text-[#2c51ba]'>Remembering passwords can be confusing</h1>
-          <h2 className='text-2xl mt-10 ml-1 text-gray-700'>We make that easy at <span className='text-[#2c51ba]'>Securevault</span></h2>
+        <div className='sm:mt-0 mt-10 text-center'>
+          <h1 className='md:text-7xl text-4xl font-medium sm:w-[70%] mt-0 font-sans text-[#2c51ba]'>Remembering passwords can be confusing</h1>
+          <h2 className='md:text-2xl text-xl md:mt-10 mt-6 ml-1 text-gray-700'>We make that easy at <span className='text-[#2c51ba]'>Securevault</span></h2>
         </div>
 
         {/* <div className="sm:h-72 h-64 sm:w-40 w-[9.5rem] rounded-2xl bg-white px-2 py-4 border border-gray-400 mt-0">
@@ -87,7 +87,7 @@ const Hero = () => {
           </div>
         </div> */}
 
-        <img src="/hero.jpg" alt="" className='w-[30rem]' />
+        <img src="/phone2.png" alt="" className='md:w-[30rem] w-[35rem md:mt-0 mt-6' />
 
       </div>
     </div>
