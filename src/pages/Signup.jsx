@@ -6,6 +6,7 @@ import { useUserContext } from "../context/userContex";
 import { RxCross1 } from "react-icons/rx";
 import { useNavigate } from "react-router-dom";
 import { doc, setDoc } from "firebase/firestore";
+import { FaEye } from "react-icons/fa";
 
 const SignUp = () => {
 
@@ -21,6 +22,7 @@ const SignUp = () => {
     });
     const [error, setError] = useState(null);
     const [success, setSuccess] = useState(false);
+    const [viewPass, setViewPass] = useState(false);
 
     const navigate = useNavigate();
 
@@ -136,16 +138,22 @@ const SignUp = () => {
                                     <label className="block text-gray-700 text-sm font-bold mb-2" htmlFor="password">
                                         Create Password:
                                     </label>
-                                    <input
-                                        type="password"
-                                        id="password"
-                                        name="password"
-                                        value={formData.password}
-                                        onChange={handleChange}
-                                        className="w-full px-4 py-2 border border-gray-300 rounded-md focus:ring-2 focus:ring-purple-500 focus:outline-none"
-                                        placeholder="Enter your password"
-                                        required
-                                    />
+
+                                    <div className="flex items-center relative">
+                                        <input
+                                            type={ viewPass ? "text" :"password" }
+                                            id="password"
+                                            name="password"
+                                            value={formData.password}
+                                            onChange={handleChange}
+                                            className="w-full px-4 py-2 border border-gray-300 rounded-md focus:ring-2 focus:ring-purple-500 focus:outline-none"
+                                            placeholder="Enter your password"
+                                            required
+                                        />
+                                        <FaEye className="absolute right-2 cursor-pointer text-gray-600" 
+                                        onClick={()=>setViewPass(!viewPass)}
+                                        />
+                                    </div>
                                 </div>
 
                                 <button
