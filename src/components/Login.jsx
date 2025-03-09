@@ -3,8 +3,9 @@ import { sendPasswordResetEmail, signInWithEmailAndPassword } from "firebase/aut
 import { auth } from "../firebase";
 import { useUserContext } from '../context/userContex';
 import { useNavigate } from 'react-router-dom';
+import { FaEye } from 'react-icons/fa';
 
-const Login = ({ authMethod, setAuthMethod }) => {
+const Login = ({ authMethod, setAuthMethod, viewPass, setViewPass }) => {
 
     const [formData, setFormData] = useState({
         email: '',
@@ -98,20 +99,25 @@ const Login = ({ authMethod, setAuthMethod }) => {
                             </div>
                             <div className="mb-4">
                                 <label className="block text-gray-700 text-sm font-bold mb-2" htmlFor="password">
-                                    Create Password:
+                                    Password:
                                 </label>
-                                <input
-                                    type="password"
-                                    id="password"
-                                    name='password'
-                                    onChange={handleChange}
-                                    className="w-full px-4 py-2 border border-gray-300 rounded-md focus:ring-2 focus:ring-purple-500 focus:outline-none"
-                                    placeholder="Enter your password"
-                                />
+
+                                <div className='flex items-center relative'>
+                                    <input
+                                        type={viewPass ? "text" : "password"}
+                                        id="password"
+                                        name='password'
+                                        onChange={handleChange}
+                                        className="w-full px-4 py-2 border border-gray-300 rounded-md focus:ring-2 focus:ring-purple-500 focus:outline-none"
+                                        placeholder="Enter your password"
+                                    />
+                                    <FaEye className='text-gray-500 absolute right-2 cursor-pointer' onClick={()=>setViewPass(!viewPass)} />
+                                </div>
+
                             </div>
 
                             <div className='-mt-5 text-sm text-gray-700 pl-0.5'
-                            onClick={()=>setPassReset(!passReset)}
+                                onClick={() => setPassReset(!passReset)}
                             >
                                 <a href='#' className='underline'>Forgot Password</a>
                             </div>
@@ -138,7 +144,7 @@ const Login = ({ authMethod, setAuthMethod }) => {
                     <form onSubmit={handleSubmit} className="flex justify-center gap-4 flex-col w-full md:w-1/2 p-8 min-h-[595px] max-h-[595px] ">
 
                         <h2 className="text-3xl font-bold text-gray-800 mb-3">Reset your password here</h2>
-                        
+
                         <input
                             type="email"
                             placeholder="Enter your email"
@@ -150,8 +156,8 @@ const Login = ({ authMethod, setAuthMethod }) => {
                         <button type="submit" className="bg-purple-600 text-white p-2 ">
                             Reset Password
                         </button>
-                        
-                        <a href="#" onClick={()=> setPassReset(!passReset)} className='underline text-gray-600 text-sm -mt-2'>
+
+                        <a href="#" onClick={() => setPassReset(!passReset)} className='underline text-gray-600 text-sm -mt-2'>
                             back to login
                         </a>
                     </form>

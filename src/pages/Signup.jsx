@@ -175,7 +175,7 @@ const SignUp = () => {
                         </div>
 
                         :
-                        <Login setAuthMethod={setAuthMethod} authMethod={authMethod} />
+                        <Login setAuthMethod={setAuthMethod} authMethod={authMethod} viewPass={viewPass} setViewPass={setViewPass} />
                 }
             </div>
         </div>
