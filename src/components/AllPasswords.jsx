@@ -7,6 +7,7 @@ import { IoMdCopy } from 'react-icons/io';
 import CryptoJS, { enc } from 'crypto-js';
 import { doc, setDoc, collection, addDoc, getDocs, onSnapshot, deleteDoc } from "firebase/firestore";
 import { db } from "../firebase";
+import PasswordInputForm from './PasswordInputForm';
 
 const AllPasswords = ({ setShowEditModal, setPassToEdit }) => {
 
@@ -18,6 +19,7 @@ const AllPasswords = ({ setShowEditModal, setPassToEdit }) => {
     const [loading, setLoading] = useState(false);
     const [userPasses, setUserPasses] = useState([]);
     const [searchQuery, setSearchQuery] = useState('');
+    const [showAddPass, setShowAddPass] = useState(false);
 
     // console.log(userPasses,);
     const decryptData = (ciphertext) => {
@@ -130,27 +132,35 @@ const AllPasswords = ({ setShowEditModal, setPassToEdit }) => {
     return (
         <div className="passwords-list py-8">
 
-            {userPasses.length === 0 ?
-                // <h2 className='mb-5 text-xl font-semibold ml-[2px]'>Your Passwords Will Appear Here</h2>
-                <div className='w-full mt-10'>
-                    <img src="/empty.jpg" className='w-[30rem] mx-auto rounded-lg' />
-                </div>
-                :
-                <div className='flex gap-5 items- mb-5 md:flex-row flex-col'>
-                    <h2 className=' text-xl font-semibold ml-[2px] text-start'>All Your Passwords</h2>
-                    <input type="text" placeholder='Search' className='rounded-full sm:w-48 w-full border border-gray-400 text-gray-700 focus:outline-none bg-white pl-3 py-1 text-sm'
-                        onChange={(e) => { setSearchQuery(e.target.value) }}
-                    />
-                </div>}
+            <div className="flex flex-row-reverse mb-6 justify-between ">
+                <button className='bg-blue-600 text-white px-6 py-3 rounded-md hover:bg-blue-500'
+                    onClick={() => setShowAddPass(!showAddPass)}
+                >
+                    Add Password
+                </button>
 
-            <div className="flex flex-wrap gap-4">
+                {userPasses.length === 0 ?
+                    // <h2 className='mb-5 text-xl font-semibold ml-[2px]'>Your Passwords Will Appear Here</h2>
+                    <div className='w-full mt-10'>
+                        <img src="/empty.jpg" className='w-[30rem] mx-auto rounded-lg' />
+                    </div>
+                    :
+                    <div className='flex gap-5 items- mb-0 items-center md:flex-row flex-col'>
+                        <h2 className=' text-xl font-semibold ml-[2px] text-start'>All Your Passwords</h2>
+                        <input type="text" placeholder='Search' className='rounded-full sm:w-48 w-full border border-gray-400 text-gray-700 focus:outline-none bg-white pl-3 py-1 text-sm'
+                            onChange={(e) => { setSearchQuery(e.target.value) }}
+                        />
+                    </div>}
+            </div>
+
+            <div className="grid xl:grid-cols-4 lg:grid-cols-3 md:grid-cols-2 gap-3 flex-wrap">
                 {userPasses?.filter((data) => decryptData(data?.site)?.toLowerCase()?.includes(searchQuery?.toLowerCase()))
                     .map((pass, i) => (
                         <div
                             key={i}
                             className=" text-black w-80 overflow-hidden rounded-lg backdrop-blur-lg flex items-center justify-center "
                         >
-                            <div className="bg-gradient-to-r from-purple-600 overflow-hidden to-purple-800 text-white rounded-xl p-6 w-80 shadow-lg  relative">
+                            <div className="bg-gradient-to-r from-purple-600 overflow-hidden to-purple-800 text-white rounded-xl p-6 w-full h-full shadow-lg  relative">
                                 {/* Circular elements for background */}
                                 <div className="absolute -top-8 -left-8 h-24 w-24 bg-purple-400 rounded-full opacity-20"></div>
                                 <div className={`absolute -top-4 -right-1 h-16 w-16 bg-purple-300/20 rounded-full opacity-80`}></div>
@@ -212,6 +222,11 @@ const AllPasswords = ({ setShowEditModal, setPassToEdit }) => {
                         </div>
                     ))}
             </div>
+
+            {
+                showAddPass &&
+                <PasswordInputForm setShowAddPass={setShowAddPass} showAddPass={showAddPass} />
+            }
         </div>
     )
 }

@@ -31,8 +31,11 @@ const Navbar = () => {
     <nav className={`z-20 flex ${isHome ? 'top-4 absolute' : ''} w-full rounded-full`}>
       <div className={`nav-container flex justify-between items-center sm:px-10 px-4 sm:py-4 py-2 relative ${isHome ? 'w-[92%] rounded-full shadow-sm' : 'w-full shadow-md'} mx-auto bg-[#fff]`}>
         {/* Logo */}
-        <div className="logo text-[#4461b9] font-bold sm:text-2xl text-lg">
-          <Link to="/">SecureVault</Link>
+        <div className="logo flex  font-bold sm:text-2xl text-lg">
+          <Link to="/" className='flex items-center gap-2'>
+            <img src="/logo2.png" className='w-12' />
+            <h1 className='font-semibold uppercase'>Forget <span className='text-[#965be4]'>Not</span></h1>
+          </Link>
         </div>
 
         {/* Desktop Navigation */}
