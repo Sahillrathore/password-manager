@@ -16,6 +16,8 @@ const PasswordInputForm = ({ setShowAddPass , showAddPass}) => {
         site: ""
     });
 
+      const [showPass, setShowPass] = useState(true);
+
     const { user } = useUserContext();
     const passRef = useRef();
     const inputRefs = useRef([]);

@@ -19,7 +19,6 @@ const Passmanager = () => {
   const { user } = useUserContext();
 
   const [userPasses, setUserPasses] = useState([]);
-  const [showPass, setShowPass] = useState(true);
   const [loading, setLoading] = useState(false);
   const [showEditModal, setShowEditModal] = useState(false);
   const [passToEdit, setPassToEdit] = useState();
