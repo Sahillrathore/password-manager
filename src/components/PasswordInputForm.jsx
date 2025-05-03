@@ -101,6 +101,7 @@ const PasswordInputForm = ({ setShowAddPass , showAddPass}) => {
                 password: "",
                 site: ""
             })
+            setShowAddPass(!showAddPass)
 
         } catch (error) {
             console.error("Error saving password:", error.message);
