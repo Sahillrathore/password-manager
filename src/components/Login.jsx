@@ -16,6 +16,7 @@ const Login = ({ authMethod, setAuthMethod, viewPass, setViewPass }) => {
     const [error, setError] = useState(null);
     const [email, setEmail] = useState("");
     const [passReset, setPassReset] = useState(false);
+    const [loading, setLoading] = useState();
 
     const navigate = useNavigate();
 
@@ -27,8 +28,15 @@ const Login = ({ authMethod, setAuthMethod, viewPass, setViewPass }) => {
     const handleLogin = async (e) => {
         e.preventDefault();
         setError(null);
+        if(!formData.email) {
+            console.log(email);
+            
+            setError('Please fill all fields')
+            return;
+        }
 
         try {
+            setLoading(true);
             const userCredential = await signInWithEmailAndPassword(auth, formData.email, formData.password);
             setUser(userCredential?.user);
             console.log(user);
@@ -54,6 +62,8 @@ const Login = ({ authMethod, setAuthMethod, viewPass, setViewPass }) => {
                     setError("An unknown error occurred");
             }
             console.error("Firebase Auth Error:", error.message);
+        } finally {
+            setLoading(false);
         }
     };
 
@@ -93,6 +103,7 @@ const Login = ({ authMethod, setAuthMethod, viewPass, setViewPass }) => {
                                     id="email"
                                     name='email'
                                     onChange={handleChange}
+                                    required={true}
                                     className="w-full px-4 py-2 border border-gray-300 rounded-md focus:ring-2 focus:ring-purple-500 focus:outline-none"
                                     placeholder="Enter your email"
                                 />
@@ -126,8 +137,9 @@ const Login = ({ authMethod, setAuthMethod, viewPass, setViewPass }) => {
                                 type="submit"
                                 className="w-full bg-purple-600 text-white py-2 rounded-md text-lg hover:bg-purple-700 transition duration-200 mt-[9.5rem]"
                                 onClick={handleLogin}
+                                disabled={loading}
                             >
-                                Login
+                                {loading ? "Login..." : "Login"}
                             </button>
                         </form>
                         <p className="text-gray-600 text-sm mt-4 text-center">

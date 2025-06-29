@@ -1,10 +1,10 @@
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import Login from "../components/Login";
 import { createUserWithEmailAndPassword, updateProfile } from "firebase/auth";
 import { auth, db } from "../firebase";
 import { useUserContext } from "../context/userContex";
 import { RxCross1 } from "react-icons/rx";
-import { useNavigate } from "react-router-dom";
+import { useLocation, useNavigate } from "react-router-dom";
 import { doc, setDoc } from "firebase/firestore";
 import { FaEye } from "react-icons/fa";
 
@@ -23,9 +23,20 @@ const SignUp = () => {
     const [error, setError] = useState(null);
     const [success, setSuccess] = useState(false);
     const [viewPass, setViewPass] = useState(false);
+    const [loading, setLoading] = useState(false);
 
+    const location = useLocation();
+    const login = location.state?.login;
+    console.log(login);
+    
     const navigate = useNavigate();
 
+    useEffect(()=>{
+        if(login === 'login') {
+            setAuthMethod('login');
+        }
+    },[])
+    
     const handleChange = (e) => {
         const { name, value } = e.target;
         setFormData((prevFormData) => ({
@@ -40,6 +51,7 @@ const SignUp = () => {
         setSuccess(false);
 
         try {
+            setLoading(true);
             const userCredential = await createUserWithEmailAndPassword(auth, formData.email, formData.password);
             const user = userCredential.user;
 
@@ -84,6 +96,8 @@ const SignUp = () => {
             if (auth.currentUser) {
                 await auth.currentUser.delete();
             }
+        } finally {
+            setLoading(false);
         }
     };
 

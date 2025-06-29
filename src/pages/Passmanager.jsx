@@ -23,62 +23,6 @@ const Passmanager = () => {
   const [showEditModal, setShowEditModal] = useState(false);
   const [passToEdit, setPassToEdit] = useState();
 
-  const passRef = useRef();
-  const inputRefs = useRef([]);
-
-  const deletePass = async (id) => {
-    const cnfrm = confirm("Do You Really Want To Delete This Password?");
-    if (cnfrm) {
-      try {
-        const uid = user?.uid;
-        if (!uid) {
-          throw new Error("User UID is required to delete a password.");
-        }
-
-        // Reference to the specific password document
-        const passwordDocRef = doc(db, "passwords", uid, "userPasswords", id);
-
-        // Delete the document from Firestore
-        await deleteDoc(passwordDocRef);
-
-        // Update the state to remove the deleted password locally
-        setUserPasses(userPasses.filter(pass => pass.id !== id));
-
-        console.log("Password deleted successfully!");
-      } catch (error) {
-        console.error("Error deleting password:", error.message);
-      }
-    }
-  };
-
-  const editPassword = async (id) => {
-    console.log(id);
-
-    setPassToEdit(id);
-    setShowEditModal(true);
-  };
-
-
-
-  const passViewRefHandler = (index) => {
-    const inputField = inputRefs.current[index];
-    if (inputField.type === 'password') {
-      inputField.type = 'text';
-    } else {
-      inputField.type = 'password';
-    }
-  };
-
-  const copyPassword = (index) => {
-    const password = inputRefs.current[index]?.value;
-    if (password) {
-      navigator.clipboard.writeText(password);
-      // alert('Password copied to clipboard!');
-    }
-  }
-
-
-
   useEffect(() => {
     if (!user?.uid) {
       console.error("User UID is required to retrieve passwords.");
@@ -122,7 +66,7 @@ const Passmanager = () => {
       <ToastContainer
         autoClose={2000}
       />
-      <div className=' pt-0 md:px-12 px-6 w-full overflow-hidden relative '>
+      <div className=' pt-0 md:px-12 px-6 w-full overflow-hidden '>
         
         <AllPasswords setPassToEdit={setPassToEdit} setShowEditModal={setShowEditModal} />
 
