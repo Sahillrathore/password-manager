@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useEffect, useState } from 'react';
 import { Link, NavLink, useLocation } from 'react-router-dom';
 import { useUserContext } from '../context/userContex';
 import { CgProfile } from 'react-icons/cg';
@@ -26,6 +26,8 @@ const Navbar = () => {
       console.error("Error logging out:", error);
     }
   };
+
+  useEffect(() => { console.log(profileView) }, [profileView])
 
   return (
     <nav className={`z-20 flex ${isHome ? 'top-4 absolute' : ''} w-full rounded-full`}>
@@ -76,16 +78,27 @@ const Navbar = () => {
 
         {/* Mobile Navigation Menu */}
         {navToggle && (
-          <div className="nav-links-md absolute top-16 right-7 z-50 bg-black/70 px-4 py-6 rounded-lg flex flex-col gap-6 text-zinc-200 md:hidden">
-            <NavLink className="hover:text-yellow-400" to="/" onClick={navHandler}>
-              Home
-            </NavLink>
-            <a className="hover:text-yellow-400" href="#features" onClick={navHandler}>
-              Features
-            </a>
-            <NavLink className="hover:text-yellow-400" to="/managers" onClick={navHandler}>
-              Get Started
-            </NavLink>
+          <div className="nav-links-md absolute sm:top-[5.5rem] top-[4.5rem] right-4 z-50 bg-black/80 backdrop-blur-sm px-4 py-6 rounded-lg flex flex-col gap-6 text-zinc-200 md:hidden">
+            <NavLink className="hover:text-[#16379a]" to="/">Home</NavLink>
+            {user ? (
+              <NavLink className="hover:text-[#16379a]" to="/managers">Manager</NavLink>
+            ) : (
+              <a className="hover:text-[#16379a]" href="#features">Features</a>
+            )}
+            {user ? (
+              <div>
+                <p className="text-sm pb-1 border-b border-gray-300">{user?.email}</p>
+                <button
+                  className="px-4 mt-2 py-1.5 bg-blue-600 hover:bg-blue-500 text-white font-semibold rounded-md text-sm transition-colors"
+                  onClick={handleLogout}
+                >
+                  Logout
+                </button>
+              </div>
+            ) : (
+              <NavLink className="hover:text-[#16379a]" to="/managers">Get Started</NavLink>
+            )}
+
           </div>
         )}
       </div>
