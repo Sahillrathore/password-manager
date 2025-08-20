@@ -153,7 +153,7 @@ const AllPasswords = ({ setShowEditModal, setPassToEdit }) => {
                     </div>}
             </div>
 
-            <div className="grid xl:grid-cols-4 lg:grid-cols-3 md:grid-cols-2 gap-3 flex-wrap">
+            <div className="grid xl:grid-cols-4 lg:grid-cols-3 md:grid-cols-2 gap-3 justify-center flex-wrap w-full">
                 {userPasses?.filter((data) => decryptData(data?.site)?.toLowerCase()?.includes(searchQuery?.toLowerCase()))
                     .map((pass, i) => (
                         <div
