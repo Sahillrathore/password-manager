@@ -133,7 +133,7 @@ const AllPasswords = ({ setShowEditModal, setPassToEdit }) => {
         <div className="passwords-list py-8">
 
             <div className="flex flex-row-reverse mb-6 justify-between ">
-                <button className='bg-blue-600 text-white px-6 py-3 h-fit rounded-md hover:bg-blue-500'
+                <button className='bg-blue-600 text-white sm:text-base text-sm sm:px-6 px-2 py-3 h-fit rounded-md hover:bg-blue-500'
                     onClick={() => setShowAddPass(!showAddPass)}
                 >
                     Add Password
@@ -145,8 +145,8 @@ const AllPasswords = ({ setShowEditModal, setPassToEdit }) => {
                         <img src="/empty.jpg" className='w-[30rem] mx-auto rounded-lg' />
                     </div>
                     :
-                    <div className='flex gap-5 items- mb-0 items-center md:flex-row flex-col'>
-                        <h2 className=' text-xl font-semibold ml-[2px] text-start'>All Your Passwords</h2>
+                    <div className='flex gap-5 items- mb-0 sm:items-center sm:mt-0 mt-1.5 md:flex-row flex-col'>
+                        <h2 className=' sm:text-xl text-lg font-semibold sm:ml-[2px] text-start'>All Your Passwords</h2>
                         <input type="text" placeholder='Search' className='rounded-full sm:w-48 w-full border border-gray-400 text-gray-700 focus:outline-none bg-white pl-3 py-1 text-sm'
                             onChange={(e) => { setSearchQuery(e.target.value) }}
                         />

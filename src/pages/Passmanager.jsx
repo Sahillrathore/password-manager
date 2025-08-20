@@ -66,7 +66,7 @@ const Passmanager = () => {
       <ToastContainer
         autoClose={2000}
       />
-      <div className=' pt-0 md:px-12 px-6 w-full overflow-hidden '>
+      <div className=' pt-0 md:px-12 px-4 w-full overflow-hidden '>
         
         <AllPasswords setPassToEdit={setPassToEdit} setShowEditModal={setShowEditModal} />
 
