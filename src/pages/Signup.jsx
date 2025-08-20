@@ -104,7 +104,7 @@ const SignUp = () => {
     return (
         <div className="min-h-screen flex items-center justify-center bg-gray-100">
             {/* <RxCross1 className="absolute top-12 right-12 cursor-pointer"/> */}
-            <div className="bg-white rounded-lg  h-fit shadow-lg overflow-hidden flex w-3/4 max-w-4xl">
+            <div className="bg-white rounded-lg  h-fit shadow-lg overflow-hidden flex sm:w-3/4 max-w-4xl">
                 {/* Left Image Section */}
                 <div className="hidden md:block w-1/2 bg-cover bg-center" style={{ backgroundImage: `url('/loginbg.png')` }}>
                     {/* Replace the URL with the image source */}

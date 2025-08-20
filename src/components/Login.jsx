@@ -86,7 +86,7 @@ const Login = ({ authMethod, setAuthMethod, viewPass, setViewPass }) => {
             {
                 !passReset ?
 
-                    <div className="w-full md:w-1/2 p-8 min-h-[595px] max-h-[595px] ">
+                    <div className="w-full md:w-1/2 sm:p-8 p-6 min-h-[595px] max-h-[595px] ">
                         <h2 className="text-3xl font-bold text-gray-800 mb-3">Log in</h2>
                         <p className="text-gray-500 mb-6 text-sm">Login to your account in seconds</p>
 
@@ -155,7 +155,7 @@ const Login = ({ authMethod, setAuthMethod, viewPass, setViewPass }) => {
                     :
                     <form onSubmit={handleSubmit} className="flex justify-center gap-4 flex-col w-full md:w-1/2 p-8 min-h-[595px] max-h-[595px] ">
 
-                        <h2 className="text-3xl font-bold text-gray-800 mb-3">Reset your password here</h2>
+                        <h2 className="sm:text-3xl text-xl font-bold text-gray-800 mb-3">Reset your password here</h2>
 
                         <input
                             type="email"
