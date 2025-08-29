@@ -60,7 +60,7 @@ const Hero = () => {
         
         <div className='sm:mt-0 mt-10 md:text-start text-center'>
           <h1 className='md:text-7xl text-4xl font-medium sm:w-[70%] mt-0 font-sans text-[#2c51ba]'>Remembering passwords can be confusing</h1>
-          <h2 className='md:text-2xl text-xl md:mt-10 mt-6 ml-1 text-gray-700'>We make that easy at <span className='text-[#2c51ba]'>Securevault</span></h2>
+          <h2 className='md:text-2xl text-xl md:mt-10 mt-6 ml-1 text-gray-700'>We make that easy at <span className='text-[#2c51ba]'>ForgetNot</span></h2>
         </div>
 
         {/* <div className="sm:h-72 h-64 sm:w-40 w-[9.5rem] rounded-2xl bg-white px-2 py-4 border border-gray-400 mt-0">
