@@ -7,6 +7,7 @@ import { FaRegEye } from 'react-icons/fa';
 import { toast, ToastContainer } from 'react-toastify';
 import { RxCross1 } from 'react-icons/rx';
 import { useUserContext } from '../context/userContex';
+import PasswordGenerator from './PasswordGenerator';
 
 const PasswordInputForm = ({ setShowAddPass, showAddPass }) => {
 
@@ -190,9 +191,14 @@ const PasswordInputForm = ({ setShowAddPass, showAddPass }) => {
                         <FaRegEye
                             className="absolute right-3 top-2.5 cursor-pointer"
                             onClick={RefHandler}
-                            title="Show/Hide password"
                         />
                     </div>
+
+                    <PasswordGenerator
+                        onGenerate={(pass) =>
+                            setCredentials((prev) => ({ ...prev, password: pass }))
+                        }
+                    />
                 </div>
 
                 <button

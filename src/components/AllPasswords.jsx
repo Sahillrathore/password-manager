@@ -180,7 +180,7 @@ const AllPasswords = ({ setShowEditModal, setPassToEdit }) => {
                                 />
                                 <div className="password-action-btns flex gap-3 mt-3 justify-">
                                     <button
-                                        className="bg-indigo-00 text-black bg-purple-400 border border-purple-600 text-lg px-1 py-1  rounded-lg relative group"
+                                        className="bg-indigo-00 z-50 text-black bg-purple-400 border border-purple-600 text-lg px-1 py-1  rounded-lg relative group"
                                         onClick={() => passViewRefHandler(i)}
                                     >
                                         <FaRegEye />
@@ -189,7 +189,7 @@ const AllPasswords = ({ setShowEditModal, setPassToEdit }) => {
                                         </span>
                                     </button>
                                     <button
-                                        className="text-lg px-1 bg-purple-400 border border-purple-600 text-black rounded-md relative group"
+                                        className="text-lg z-50 px-1 bg-purple-400 border border-purple-600 text-black rounded-md relative group"
                                         onClick={() => editPassword(pass.id)}
                                     >
                                         <RiEdit2Line />
@@ -198,7 +198,7 @@ const AllPasswords = ({ setShowEditModal, setPassToEdit }) => {
                                         </span>
                                     </button>
                                     <button
-                                        className="text-lg  px-1 bg-purple-400 border border-purple-600 text-black rounded-md relative group"
+                                        className="text-lg z-50 px-1 bg-purple-400 border border-purple-600 text-black rounded-md relative group"
                                         onClick={() => deletePass(pass.id)}
                                     >
                                         <AiOutlineDelete />
@@ -207,7 +207,7 @@ const AllPasswords = ({ setShowEditModal, setPassToEdit }) => {
                                         </span>
                                     </button>
                                     <button
-                                        className="relative group bg-purple-400 border border-purple-600 p-1 text-black text-xl"
+                                        className="relative z-50 group bg-purple-400 border border-purple-600 p-1 text-black text-xl"
                                         onClick={() => copyPassword(i)}
                                     >
                                         <IoMdCopy />
