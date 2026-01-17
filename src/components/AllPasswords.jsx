@@ -132,8 +132,8 @@ const AllPasswords = ({ setShowEditModal, setPassToEdit }) => {
     return (
         <div className="passwords-list py-8">
 
-            <div className="flex flex-row-reverse mb-6 justify-between ">
-                <button className='bg-blue-600 text-white sm:text-base text-sm sm:px-6 px-2 py-3 h-fit rounded-md hover:bg-blue-500'
+            <div className={`flex ${userPasses?.length === 0 ? 'flex-col items-end' : 'flex-row-reverse'} mb-6 justify-between `}>
+                <button className='bg-blue-600 w-fit  text-white sm:text-base text-sm sm:px-6 px-2 py-3 h-fit rounded-md hover:bg-blue-500'
                     onClick={() => setShowAddPass(!showAddPass)}
                 >
                     Add Password
@@ -153,7 +153,7 @@ const AllPasswords = ({ setShowEditModal, setPassToEdit }) => {
                     </div>}
             </div>
 
-            <div className="grid xl:grid-cols-4 lg:grid-cols-3 md:grid-cols-2 gap-3 justify-center flex-wrap w-full">
+            <div className="grid xl:grid-cols-4  lg:grid-cols-3 md:grid-cols-2 gap-3 justify-center flex-wrap w-full">
                 {userPasses?.filter((data) => decryptData(data?.site)?.toLowerCase()?.includes(searchQuery?.toLowerCase()))
                     .map((pass, i) => (
                         <div

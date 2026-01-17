@@ -70,15 +70,15 @@ const Navbar = () => {
         </div>
 
         {/* Mobile Navigation Toggle Icon */}
-        <div className="md:hidden mt-0">
-          <button onClick={navHandler} className="text-xl text-zinc-700 focus:outline-none">
+        {/* <div className="md:hidden mt-0"> */}
+          <button onClick={navHandler} className="text-xl text-zinc-700 focus:outline-none md:hidden mt-0">
             {navToggle ? <FiX /> : <FiMenu />}
           </button>
-        </div>
+        {/* </div> */}
 
         {/* Mobile Navigation Menu */}
         {navToggle && (
-          <div className="nav-links-md absolute sm:top-[5.5rem] top-[4.5rem] right-4 z-50 bg-black/80 backdrop-blur-sm px-4 py-6 rounded-lg flex flex-col gap-6 text-zinc-200 md:hidden">
+          <div className="nav-links-md absolute sm:top-[5.5rem] top-[4.2rem] right-2 z-50 bg-white/80 border border-gray-300 backdrop-blur-sm px-4 py-6 rounded-lg flex flex-col gap-6 text-zinc-800 md:hidden">
             <NavLink className="hover:text-[#16379a]" to="/">Home</NavLink>
             {user ? (
               <NavLink className="hover:text-[#16379a]" to="/managers">Manager</NavLink>
