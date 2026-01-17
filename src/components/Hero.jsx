@@ -87,7 +87,7 @@ const Hero = () => {
           </div>
         </div> */}
 
-        <img src="/phone2.png" alt="" className='md:w-[30rem] w-[35rem md:mt-0 mt-6' />
+        <img src="/herophone.png" alt="" className='md:w-[30rem] w-[35rem md:mt-0 mt-6' />
 
       </div>
     </div>
